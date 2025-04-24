@@ -122,8 +122,21 @@ namespace BiomentricoHolding.Views.Reportes
                 return;
             }
 
-            DateTime desde = dpDesde.SelectedDate ?? DateTime.MinValue;
-            DateTime hasta = dpHasta.SelectedDate ?? DateTime.MaxValue;
+            // Validación de fecha
+            if (!dpDesde.SelectedDate.HasValue || !dpHasta.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Debe seleccionar un rango de fechas válido.");
+                return;
+            }
+
+            DateTime desde = dpDesde.SelectedDate.Value;
+            DateTime hasta = dpHasta.SelectedDate.Value;
+
+            if (desde > hasta)
+            {
+                MessageBox.Show("La fecha de inicio no puede ser mayor que la fecha final.");
+                return;
+            }
 
             var empleado = _context.Empleados.FirstOrDefault(e => e.Documento == documento);
             if (empleado == null)
@@ -132,10 +145,17 @@ namespace BiomentricoHolding.Views.Reportes
                 return;
             }
 
+            // Agrupar las marcaciones por fecha
             var marcacionesDia = _context.Marcaciones
                 .Where(m => m.IdEmpleado == empleado.IdEmpleado && m.FechaHora >= desde && m.FechaHora <= hasta)
                 .GroupBy(m => m.FechaHora.Date)
                 .ToList();
+
+            if (marcacionesDia.Count == 0)
+            {
+                MessageBox.Show("No se encontraron marcaciones para este empleado en el rango de fechas seleccionado.");
+                return;
+            }
 
             var horarios = _context.EmpleadosHorarios.Where(h => h.EmpleadoId == empleado.IdEmpleado).ToList();
             var tipos = _context.TiposMarcacions.ToList();
@@ -148,8 +168,10 @@ namespace BiomentricoHolding.Views.Reportes
                 var entradas = grupo.Where(m => tipos.FirstOrDefault(t => t.Id == m.IdTipoMarcacion)?.Nombre.ToLower() == "entrada").OrderBy(m => m.FechaHora);
                 var salidas = grupo.Where(m => tipos.FirstOrDefault(t => t.Id == m.IdTipoMarcacion)?.Nombre.ToLower() == "salida").OrderByDescending(m => m.FechaHora);
 
-                var entrada = entradas.FirstOrDefault();
-                var salida = salidas.FirstOrDefault();
+                // Si no hay una entrada explícita, tomar la primera marcación como entrada
+                var entrada = entradas.FirstOrDefault() ?? grupo.OrderBy(m => m.FechaHora).FirstOrDefault();
+                // Si no hay una salida explícita, tomar la última marcación como salida
+                var salida = salidas.FirstOrDefault() ?? grupo.OrderByDescending(m => m.FechaHora).FirstOrDefault();
 
                 var diaSemana = (int)fecha.DayOfWeek + 1;
                 var horario = horarios.FirstOrDefault(h => h.DiaSemana == diaSemana);
@@ -157,9 +179,41 @@ namespace BiomentricoHolding.Views.Reportes
                 var horaEsperadaEntrada = horario?.Inicio.ToTimeSpan();
                 var horaEsperadaSalida = horario?.Fin.ToTimeSpan();
 
-                bool retardoEntrada = entrada != null && horaEsperadaEntrada.HasValue && (entrada.FechaHora.TimeOfDay - horaEsperadaEntrada.Value) > TimeSpan.FromMinutes(15);
-                bool retardoSalida = salida != null && horaEsperadaSalida.HasValue && (horaEsperadaSalida.Value - salida.FechaHora.TimeOfDay) > TimeSpan.FromMinutes(15);
+                // Calcular el retraso para entrada y salida en minutos enteros
+                int retrasoEntrada = 0, retrasoSalida = 0;
+                string iconoRetraso = "✔️"; // A tiempo por defecto
+                string iconoColor = "Green"; // Verde por defecto
 
+                // Verificar retraso en la entrada
+                if (entrada != null && horaEsperadaEntrada.HasValue)
+                {
+                    var diferenciaEntrada = entrada.FechaHora.TimeOfDay - horaEsperadaEntrada.Value;
+                    if (diferenciaEntrada > TimeSpan.FromMinutes(15))
+                    {
+                        retrasoEntrada = (int)diferenciaEntrada.TotalMinutes;  // Retraso en minutos (entero)
+                        iconoRetraso = "❌";  // Rojo para retraso
+                        iconoColor = "Red";   // Color rojo para retraso
+                    }
+                }
+
+                // Verificar retraso en la salida
+                if (salida != null && horaEsperadaSalida.HasValue)
+                {
+                    var diferenciaSalida = horaEsperadaSalida.Value - salida.FechaHora.TimeOfDay;
+                    if (diferenciaSalida > TimeSpan.FromMinutes(15))
+                    {
+                        retrasoSalida = (int)diferenciaSalida.TotalMinutes;  // Retraso en minutos (entero)
+                        iconoRetraso = "❌";  // Rojo para retraso
+                        iconoColor = "Red";   // Color rojo para retraso
+                    }
+                }
+
+                // Hora de entrada/salida real y esperada
+                string horaEsperada = $"{horaEsperadaEntrada?.ToString(@"hh\:mm") ?? "-"} / {horaEsperadaSalida?.ToString(@"hh\:mm") ?? "-"}";
+                string horaEntradaReal = entrada != null ? $"{entrada.FechaHora.ToString("HH:mm")} ({_context.Sedes.FirstOrDefault(s => s.IdSede == entrada.IdSede)?.Nombre})" : "-";
+                string horaSalidaReal = salida != null ? $"{salida.FechaHora.ToString("HH:mm")} ({_context.Sedes.FirstOrDefault(s => s.IdSede == salida.IdSede)?.Nombre})" : "-";
+
+                // Agregar la información a los resultados
                 resultado.Add(new
                 {
                     Documento = empleado.Documento.ToString(),
@@ -169,16 +223,19 @@ namespace BiomentricoHolding.Views.Reportes
                     Area = _context.Areas.FirstOrDefault(x => x.IdArea == empleado.IdArea)?.Nombre,
                     DiaSemana = fecha.ToString("dddd"),
                     Fecha = fecha.ToString("dd/MM/yyyy"),
-                    HoraEntradaReal = entrada?.FechaHora.ToString("HH:mm") ?? "-",
-                    HoraSalidaReal = salida?.FechaHora.ToString("HH:mm") ?? "-",
-                    HoraEsperada = $"{horaEsperadaEntrada?.ToString(@"hh\:mm") ?? "-"} / {horaEsperadaSalida?.ToString(@"hh\:mm") ?? "-"}",
-                    Retardo = retardoEntrada || retardoSalida ? "Sí" : "A tiempo",
-                    EstadoIcono = retardoEntrada || retardoSalida ? "🔴" : "🟢"
+                    HoraEntradaReal = horaEntradaReal,
+                    HoraSalidaReal = horaSalidaReal,
+                    HoraEsperada = horaEsperada,
+                    Retraso = (retrasoEntrada > 0 || retrasoSalida > 0) ? $"{Math.Max(retrasoEntrada, retrasoSalida)} min de Retraso" : "A tiempo",
+                    EstadoIcono = iconoRetraso,
+                    EstadoFondo = iconoColor
                 });
             }
 
+            // Asegúrate de que los datos se asignen al DataGrid
             dgReporte.ItemsSource = resultado;
         }
+
 
         private void GenerarReporteEmpresa()
         {

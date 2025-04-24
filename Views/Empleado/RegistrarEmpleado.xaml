@@ -92,12 +92,26 @@
 
                             <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
                                 <TextBlock Text="Nombres" FontWeight="SemiBold"/>
-                                <TextBox x:Name="txtNombres" Height="30" VerticalContentAlignment="Center" Margin="0,5,0,0"/>
+                                <TextBox x:Name="txtNombres"
+                                     
+                                     Height="30" VerticalContentAlignment="Center" Margin="0,5,0,0"       
+                                     
+                                     PreviewTextInput="SoloTexto_PreviewTextInput"
+                                    TextChanged="ConvertirAMayusculas_TextChanged"
+                                     />
+
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Grid.Row="0" Margin="10">
                                 <TextBlock Text="Apellidos" FontWeight="SemiBold"/>
-                                <TextBox x:Name="txtApellidos" Height="30" VerticalContentAlignment="Center" Margin="0,5,0,0"/>
+                                <TextBox x:Name="txtApellidos"
+         
+         Height="30" VerticalContentAlignment="Center" Margin="0,5,0,0"                                
+        
+         PreviewTextInput="SoloTexto_PreviewTextInput"
+         TextChanged="ConvertirAMayusculas_TextChanged"
+          />
+
                             </StackPanel>
 
                             <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">

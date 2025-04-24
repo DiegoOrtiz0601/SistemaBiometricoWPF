@@ -5,6 +5,7 @@ C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\o
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\CapturaEntradaSalidaWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\CapturarHuellaWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\EmpleadoYaExisteDialog.baml
+C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\MensajeWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\MiniLoginWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\RegistrarEmpleado.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\MainWindow.baml
@@ -18,6 +19,7 @@ C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\o
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\CapturaEntradaSalidaWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\CapturarHuellaWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\EmpleadoYaExisteDialog.g.cs
+C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\MensajeWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\MiniLoginWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\ModificarEmpleado.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\RegistrarEmpleado.g.cs
@@ -190,8 +192,6 @@ C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\b
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\bin\Debug\net8.0-windows\DPFPEngNET.dll
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\bin\Debug\net8.0-windows\DPFPShrNET.dll
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\bin\Debug\net8.0-windows\DPFPVerNET.dll
-C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\MensajeWindow.baml
-C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\MensajeWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Configuracion\ConfiguracionControl.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Configuracion\ConfiguracionInicialWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Debug\net8.0-windows\Views\Empleado\ModificarEmpleado.baml

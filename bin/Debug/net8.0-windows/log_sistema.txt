@@ -497,3 +497,33 @@
 [08:12:45] 📥 Botón Registrar presionado
 [08:12:47] ⏸ Se decidió mantener el horario actual. El empleado fue actualizado sin modificar la asignación.
 [08:12:51] 🧹 Formulario de empleado limpiado
+[10:22:59] 📡 Iniciando módulo de verificación de huella.
+[10:26:57] 🔄 Abriendo formulario de Registro de Empleado
+[10:27:02] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[10:27:02] 🏢 Empresa seleccionada: ID 3
+[10:27:02] 🏢 Empresa seleccionada: ID 3
+[10:27:02] 📍 Sede seleccionada: ID 4
+[10:27:02] 📍 Sede seleccionada: ID 4
+[10:27:02] 🧬 Huella digital cargada desde base de datos
+[10:27:02] 📄 Datos cargados para modificar empleado ID: 1350
+[10:27:06] 📥 Botón Registrar presionado
+[10:27:12] 🕒 Horario genérico asignado.
+[10:27:13] 🧹 Formulario de empleado limpiado
+[10:27:17] 📡 Iniciando módulo de verificación de huella.
+[10:37:54] 🔄 Abriendo formulario de Registro de Empleado
+[10:38:03] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[10:38:03] 🏢 Empresa seleccionada: ID 3
+[10:38:03] 🏢 Empresa seleccionada: ID 3
+[10:38:03] 📍 Sede seleccionada: ID 4
+[10:38:03] 📍 Sede seleccionada: ID 4
+[10:38:03] 🧬 Huella digital cargada desde base de datos
+[10:38:03] 📄 Datos cargados para modificar empleado ID: 1350
+[10:38:06] 📥 Botón Registrar presionado
+[10:38:07] ⏸ Se decidió mantener el horario actual. El empleado fue actualizado sin modificar la asignación.
+[10:38:08] 🧹 Formulario de empleado limpiado
+[00:14:59] 📡 Iniciando módulo de verificación de huella.
+[00:22:24] 📡 Iniciando módulo de verificación de huella.
+[02:11:13] 📡 Iniciando módulo de verificación de huella.
+[07:53:39] 🚫 Acceso denegado al módulo de Reportes
+[07:53:47] 🔄 Abriendo formulario de Registro de Empleado
+[07:53:50] ↩️ Usuario volvió a la pantalla principal desde RegistroEmpleado

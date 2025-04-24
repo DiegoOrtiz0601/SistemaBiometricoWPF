@@ -1,5 +1,6 @@
 ﻿using BiomentricoHolding.Services;
 using DPFP;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -22,10 +23,7 @@ namespace BiomentricoHolding.Views.Empleado
 
             capturaService = new CapturaHuellaService();
 
-            // 🛑 Siempre detener captura previa
-            capturaService.DetenerCaptura();
-
-            // ✅ Reestablecer modo correcto
+            capturaService.DetenerCaptura(); // 🛑 Siempre detener captura previa
             capturaService.Modo = ModoCaptura.Registro;
 
             capturaService.Mensaje += MostrarMensajeTexto;
@@ -33,11 +31,10 @@ namespace BiomentricoHolding.Views.Empleado
             capturaService.MuestraProcesadaImagen += DibujarHuella;
             capturaService.IntentoFallido += MostrarFalloYReintentar;
 
-            // ✅ Esperar un momento antes de reiniciar
             Dispatcher.InvokeAsync(async () =>
             {
-                await Task.Delay(500); // medio segundo
-                capturaService.IniciarCaptura();
+                await Task.Delay(500);
+                capturaService.IniciarCaptura(); // ✅ Iniciar después de espera
             });
         }
 
@@ -47,9 +44,14 @@ namespace BiomentricoHolding.Views.Empleado
             {
                 txtEstado.Text = mensaje;
 
+                // Solo mostrar mensaje en fallos graves o advertencias, no en éxito de cada intento
                 if (mensaje.Contains("Error: las muestras no coincidieron"))
                 {
-                    new MensajeWindow(mensaje).ShowDialog();
+                    new MensajeWindow(mensaje, false, "Entendido", "").ShowDialog();
+                }
+                else if (mensaje.StartsWith("❌"))
+                {
+                    new MensajeWindow(mensaje, false, "Cerrar", "").ShowDialog();
                 }
             });
         }
@@ -58,7 +60,7 @@ namespace BiomentricoHolding.Views.Empleado
         {
             Dispatcher.Invoke(() =>
             {
-                new MensajeWindow(mensaje).ShowDialog();
+                new MensajeWindow(mensaje, false, "Aceptar", "").ShowDialog();
             });
         }
 
@@ -114,7 +116,7 @@ namespace BiomentricoHolding.Views.Empleado
         {
             Dispatcher.Invoke(() =>
             {
-                new MensajeWindow("🛑 Las huellas no coincidieron.\n\nPor favor, intenta nuevamente.").ShowDialog();
+                new MensajeWindow("🛑 Las huellas no coincidieron.\n\nPor favor, intenta nuevamente.", false, "Reintentar", "").ShowDialog();
                 panelHuellas.Children.Clear();
                 txtEstado.Text = "Coloca tu dedo nuevamente en el lector.";
             });
@@ -122,7 +124,7 @@ namespace BiomentricoHolding.Views.Empleado
 
         private void BtnCerrar_Click(object sender, RoutedEventArgs e)
         {
-            capturaService.DetenerCaptura(); // ✅ Para que el lector se libere correctamente
+            capturaService.DetenerCaptura(); // ✅ Liberar el lector
             this.Close();
         }
 
@@ -131,7 +133,7 @@ namespace BiomentricoHolding.Views.Empleado
 
         protected override void OnClosed(EventArgs e)
         {
-            capturaService.DetenerCaptura(); // ✅ Seguridad adicional al cerrar
+            capturaService.DetenerCaptura(); // Seguridad adicional al cerrar
             base.OnClosed(e);
         }
     }

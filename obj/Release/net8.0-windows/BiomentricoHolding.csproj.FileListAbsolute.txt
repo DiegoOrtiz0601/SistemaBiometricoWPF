@@ -163,6 +163,7 @@ C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\b
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\BiomentricoHolding.csproj.AssemblyReference.cache
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Configuracion\BienvenidaInicialWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Configuracion\SeleccionEmpresaSedeWindow.baml
+C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\AsignarHorarioWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\CapturaEntradaSalidaWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\CapturarHuellaWindow.baml
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\EmpleadoYaExisteDialog.baml
@@ -176,6 +177,7 @@ C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\o
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Configuracion\ConfiguracionControl.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Configuracion\ConfiguracionInicialWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Configuracion\SeleccionEmpresaSedeWindow.g.cs
+C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\AsignarHorarioWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\CapturaEntradaSalidaWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\CapturarHuellaWindow.g.cs
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\Views\Empleado\EmpleadoYaExisteDialog.g.cs
@@ -205,3 +207,4 @@ C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\o
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\BiomentricoHolding.pdb
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\BiomentricoHolding.genruntimeconfig.cache
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\obj\Release\net8.0-windows\ref\BiomentricoHolding.dll
+C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\bin\Release\net8.0-windows\Assets\huella-dactilar.ico

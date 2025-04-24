@@ -7,6 +7,7 @@
         Background="#F5F7FA"
         ResizeMode="CanResizeWithGrip"
         WindowStyle="None"
+        Icon="/Assets/huella-dactilar.ico"
         AllowsTransparency="False">
 
     <Grid>

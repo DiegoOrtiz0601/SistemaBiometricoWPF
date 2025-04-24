@@ -72,11 +72,20 @@ namespace BiomentricoHolding
                 imgBienvenida.Visibility = Visibility.Collapsed;
                 MainContent.Visibility = Visibility.Visible;
             }
-            else
-            {
-                var msg = new MensajeWindow("⚠️ Acceso denegado o cancelado.");
-                msg.ShowDialog();
-            }
+            
+           
+                else
+                {
+                    Logger.Agregar("🚫 Acceso denegado a Configuración");
+
+                    var mensaje = new MensajeWindow("⚠️ Acceso denegado o cancelado.", false, "Cerrar", "")
+                    {
+                        Owner = this // 👉 Asegura que la ventana salga al frente
+                    };
+
+                    mensaje.ShowDialog();
+                }
+            
         }
 
         private void BtnControlAcceso_Click(object sender, RoutedEventArgs e)
@@ -87,9 +96,28 @@ namespace BiomentricoHolding
 
         private void BtnConsultarRegistros_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new ReportesView();
-            imgBienvenida.Visibility = Visibility.Collapsed;
-            MainContent.Visibility = Visibility.Visible;
+            var login = new MiniLoginWindow();
+            bool? resultado = login.ShowDialog();
+
+            if (resultado == true && login.AccesoPermitido && login.IdUsuarioAutenticado == 12)
+            {
+                Logger.Agregar("📊 Acceso autorizado al módulo de Reportes por el usuario 12");
+                MainContent.Content = new ReportesView();
+                imgBienvenida.Visibility = Visibility.Collapsed;
+                MainContent.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Logger.Agregar("🚫 Acceso denegado al módulo de Reportes");
+
+                var mensaje = new MensajeWindow("⚠️ Solo el usuario autorizado puede acceder a esta sección.", false, "Cerrar", "")
+                {
+                    Owner = this // 👈 Asegura que el mensaje aparezca al frente
+                };
+
+                mensaje.ShowDialog();
+            }
+
         }
 
 
@@ -109,7 +137,12 @@ namespace BiomentricoHolding
             else
             {
                 Logger.Agregar("🚫 Acceso denegado a Configuración");
-                var mensaje = new MensajeWindow("⚠️ Acceso denegado o cancelado.");
+
+                var mensaje = new MensajeWindow("⚠️ Acceso denegado o cancelado.", false, "Cerrar", "")
+                {
+                    Owner = this // 👉 Asegura que la ventana salga al frente
+                };
+
                 mensaje.ShowDialog();
             }
         }

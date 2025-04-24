@@ -6,6 +6,7 @@ namespace BiomentricoHolding.Views
     public partial class MensajeWindow : Window
     {
         public bool Resultado { get; private set; } = false;
+        private bool fueAbiertaConShowDialog = false;
 
         public MensajeWindow(string mensaje, bool mostrarCancelar = false)
         {
@@ -14,17 +15,31 @@ namespace BiomentricoHolding.Views
             btnCancelar.Visibility = mostrarCancelar ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        // ✅ Nuevo constructor con texto personalizado para botones
-        public MensajeWindow(string mensaje, bool mostrarCancelar, string textoAceptar, string textoCancelar)
-        : this(mensaje, mostrarCancelar)
+        // Nuevo ShowDialog sobreescrito
+        public new bool? ShowDialog()
         {
-            btnOK.Content = textoAceptar;
-            btnCancelar.Content = textoCancelar;
-            btnCancelar.Visibility = mostrarCancelar ? Visibility.Visible : Visibility.Collapsed;
+            fueAbiertaConShowDialog = true;
+            return base.ShowDialog();
         }
 
+        // Constructor con texto personalizado
+        public MensajeWindow(string mensaje, bool mostrarCancelar, string textoAceptar, string textoCancelar)
+            : this(mensaje, mostrarCancelar)
+        {
+            btnOK.Content = string.IsNullOrWhiteSpace(textoAceptar) ? "Aceptar" : textoAceptar;
 
-        // Constructor con autocierre
+            if (!mostrarCancelar || string.IsNullOrWhiteSpace(textoCancelar))
+            {
+                btnCancelar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                btnCancelar.Content = textoCancelar;
+                btnCancelar.Visibility = Visibility.Visible;
+            }
+        }
+
+        // Autocierre
         public MensajeWindow(string mensaje, int segundosAutocierre)
             : this(mensaje, false)
         {
@@ -43,7 +58,7 @@ namespace BiomentricoHolding.Views
             timer.Start();
         }
 
-        // Constructor para mensaje de carga tipo modal (sin botones)
+        // Carga tipo modal
         public MensajeWindow(string mensaje, bool mostrarCancelar, bool esCarga)
             : this(mensaje, mostrarCancelar)
         {
@@ -55,14 +70,13 @@ namespace BiomentricoHolding.Views
             }
         }
 
-        // Constructor con tipo de mensaje (alerta, info, etc.)
+        // Tipo visual
         public MensajeWindow(string mensaje, int segundosAutocierre, string tipo)
             : this(mensaje, false)
         {
             btnOK.Visibility = Visibility.Collapsed;
             btnCancelar.Visibility = Visibility.Collapsed;
 
-            // Cambiar ícono y color
             switch (tipo.ToLower())
             {
                 case "advertencia":
@@ -73,7 +87,7 @@ namespace BiomentricoHolding.Views
                     icono.Text = "❌";
                     icono.Foreground = System.Windows.Media.Brushes.Red;
                     break;
-                default: // info
+                default:
                     icono.Text = "🔔";
                     icono.Foreground = System.Windows.Media.Brushes.SteelBlue;
                     break;
@@ -94,26 +108,35 @@ namespace BiomentricoHolding.Views
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
             Resultado = true;
-            this.DialogResult = true;
+            if (fueAbiertaConShowDialog)
+                this.DialogResult = true;
+            else
+                this.Close();
         }
 
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)
         {
             Resultado = false;
-            this.DialogResult = false;
+            if (fueAbiertaConShowDialog)
+                this.DialogResult = false;
+            else
+                this.Close();
         }
+
         private void BtnCerrar_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false; // Asegura que no se tome como confirmación
-            this.Close();
+            Resultado = false;
+            if (fueAbiertaConShowDialog)
+                this.DialogResult = false;
+            else
+                this.Close();
         }
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             base.OnClosing(e);
-            if (!this.DialogResult.HasValue)
-            {
+            if (fueAbiertaConShowDialog && !this.DialogResult.HasValue)
                 this.DialogResult = false;
-            }
         }
     }
 }
