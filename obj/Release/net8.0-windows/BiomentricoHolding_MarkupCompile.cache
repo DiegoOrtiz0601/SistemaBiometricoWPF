@@ -1,5 +1,5 @@
 ﻿BiomentricoHolding
-
+1.0.8.0
 
 winexe
 C#
@@ -12,7 +12,7 @@ TRACE;RELEASE;NET;NET8_0;NETCOREAPP
 C:\Users\Diego VML\Documents\Proyectos\SistemaBiometricoWPF\BiomentricoHolding\App.xaml
 142032507072
 3668295281
-551201545742
+56-487830739
 242-1905385757
 Views\Configuracion\BienvenidaInicialWindow.xaml;Views\Configuracion\ConfiguracionControl.xaml;Views\Configuracion\ConfiguracionInicialWindow.xaml;Views\Configuracion\SeleccionEmpresaSedeWindow.xaml;Views\Empleado\AsignarHorarioWindow.xaml;Views\Empleado\CapturaEntradaSalidaWindow.xaml;Views\Empleado\CapturarHuellaWindow.xaml;Views\Empleado\EmpleadoYaExisteDialog.xaml;Views\Empleado\MensajeWindow.xaml;Views\Empleado\MiniLoginWindow.xaml;Views\Empleado\ModificarEmpleado.xaml;Views\Empleado\RegistrarEmpleado.xaml;Views\MainWindow.xaml;Views\Reportes\ReportesView.xaml;
 

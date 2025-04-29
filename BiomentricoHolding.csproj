@@ -7,6 +7,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\huella-dactilar.ico</ApplicationIcon>
+	  <Version>1.0.8</Version>
+	  <AssemblyVersion>1.0.8.0</AssemblyVersion>
+	  <FileVersion>1.0.8.0</FileVersion>  
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\DataBaseRegistro_Test\" />
     <Folder Include="Data\dbVMLTalentoHumano\" />
     <Folder Include="Libs\DigitalPersona\" />
     <Folder Include="Models\" />

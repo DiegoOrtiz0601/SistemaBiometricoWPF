@@ -68,7 +68,7 @@ namespace BiomentricoHolding.Views.Empleado {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BiomentricoHolding;component/views/empleado/capturarhuellawindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/BiomentricoHolding;V1.0.8.0;component/views/empleado/capturarhuellawindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Empleado\CapturarHuellaWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

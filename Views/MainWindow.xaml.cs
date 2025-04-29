@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
 using BiomentricoHolding.Views.Reportes;
+using System.Reflection;
+using BiomentricoHolding.Data.DataBaseRegistro_Test;
 
 namespace BiomentricoHolding
 {
@@ -19,14 +21,47 @@ namespace BiomentricoHolding
             try
             {
                 InitializeComponent();
-                this.Loaded += MainWindow_Loaded; // mover la lógica aquí
+                this.Loaded += MainWindow_Loaded; // ⚡ Ejecutar la lógica principal cuando la ventana esté cargada completamente
+
+                MostrarVersionAplicativo(); // ⚡ Mostrar versión en la pantalla
+                RegistrarVersionSiNoExiste(); // ⚡ Registrar versión en la base de datos si no existe
             }
             catch (Exception ex)
             {
-                MessageBox.Show("error construtor" + ex.ToString());
+                MessageBox.Show("❌ Error en el constructor: " + ex.ToString());
                 throw;
             }
         }
+        private void RegistrarVersionSiNoExiste()
+        {
+            try
+            {
+                var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                if (version == null) return;
+
+                string versionTexto = $"{version.Major}.{version.Minor}.{version.Build}";
+
+                using var db = new DataBaseRegistro_TestDbContext();
+                bool existe = db.VersionSistema.Any(v => v.NumeroVersion == versionTexto);
+
+                if (!existe)
+                {
+                    db.VersionSistema.Add(new VersionSistema
+                    {
+                        NumeroVersion = versionTexto,
+                        FechaPublicacion = DateTime.Now,
+                        Comentarios = "Registro automático"
+                    });
+                    db.SaveChanges();
+                    Logger.Agregar($"✅ Versión registrada automáticamente: {versionTexto}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Agregar("❌ Error registrando versión: " + ex.Message);
+            }
+        }
+        
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -186,5 +221,36 @@ namespace BiomentricoHolding
                 }
             }
         }
+        private void MostrarVersionAplicativo()
+        {
+            try
+            {
+                var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                if (version != null)
+                {
+                    string versionTexto = $"{version.Major}.{version.Minor}.{version.Build}";
+                    lblVersion.Text = $"Versión: {versionTexto}";
+                }
+
+                using var db = new DataBaseRegistro_TestDbContext();
+                var ultimaVersion = db.VersionSistema
+                    .OrderByDescending(v => v.Id)
+                    .FirstOrDefault();
+
+                if (ultimaVersion != null)
+                {
+                    lblFechaPublicacion.Text = $"Fecha Publicación: {ultimaVersion.FechaPublicacion:dd/MM/yyyy}";
+                }
+                else
+                {
+                    lblFechaPublicacion.Text = "Fecha Publicación: N/D";
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Agregar("❌ Error mostrando versión y fecha: " + ex.Message);
+            }
+        }
+
     }
 }

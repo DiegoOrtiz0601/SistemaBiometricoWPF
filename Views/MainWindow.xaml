@@ -71,6 +71,22 @@
                         Click="BtnCerrarSesion_Click"
                         Style="{StaticResource SidebarButtonStyle}"
                         Margin="10,40,10,10"/>
+
+                <TextBlock x:Name="lblVersion"
+           Text="Versión 1.0.0"
+           Foreground="White"
+           FontSize="12"
+           FontWeight="SemiBold"
+           HorizontalAlignment="Center"
+           Margin="10,20,10,0"/>
+
+                <TextBlock x:Name="lblFechaPublicacion"
+           Text="Fecha de Publicación: "
+           Foreground="White"
+           FontSize="12"
+           FontWeight="SemiBold"
+           HorizontalAlignment="Center"
+           Margin="10,0,10,10"/>
             </StackPanel>
 
             <!-- Contenedor de contenido dinámico -->

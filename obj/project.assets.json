@@ -4510,7 +4510,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.8",
     "restore": {
       "projectUniqueName": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\BiomentricoHolding.csproj",
       "projectName": "BiomentricoHolding",

@@ -45,6 +45,8 @@ public partial class DataBaseRegistro_TestDbContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
+    public virtual DbSet<VersionSistema> VersionSistema { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=190.71.223.36;Database=DataBaseRegistros_Test;User Id=DesktopApp;Password=VmL2023**;TrustServerCertificate=True;Encrypt=True;");
