@@ -172,133 +172,119 @@ namespace BiomentricoHolding.Views.Empleado
 
         private void DeterminarTipoMarcacion(EmpleadoModel empleado)
         {
-            try
+            Dispatcher.Invoke(() =>
             {
-                using var db = new DataBaseRegistro_TestDbContext();
-
-                var hoy = DateTime.Now;
-                var diaSemana = (int)hoy.DayOfWeek;
-                if (diaSemana == 0) diaSemana = 7; // Domingo = 7
-
-                var asignacion = db.AsignacionHorarios
-                    .FirstOrDefault(a => a.IdEmpleado == empleado.IdEmpleado && a.Estado);
-
-                if (asignacion == null)
+                try
                 {
-                    Logger.Agregar($"⚠️ {empleado.Nombres} no tiene una asignación de horario activa.");
-                    new MensajeWindow("⚠ No hay horario designado para este colaborador. Por favor contacte al administrador.", 4, "advertencia")
+                    using var db = new DataBaseRegistro_TestDbContext();
+
+                    var hoy = DateTime.Now;
+                    var diaSemana = (int)hoy.DayOfWeek;
+                    if (diaSemana == 0) diaSemana = 7;
+
+                    var asignacion = db.AsignacionHorarios
+                        .FirstOrDefault(a => a.IdEmpleado == empleado.IdEmpleado && a.Estado);
+
+                    if (asignacion == null)
                     {
-                        Owner = this,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                    }.ShowDialog();
-                    lblTipoMarcacion.Text = "Sin horario";
-                    lblEstadoMarcacion.Text = "⛔";
-                    return;
-                }
+                        Logger.Agregar($"⚠️ {empleado.Nombres} no tiene una asignación de horario activa.");
+                        MostrarMensaje("⚠ No hay horario asignado. Contacte al administrador.");
+                        LimpiarFormulario();
+                        _capturaService.IniciarCaptura();
+                        return;
+                    }
 
-                var detalle = db.DetalleHorarios
-                    .FirstOrDefault(d => d.IdAsignacion == asignacion.Id && d.DiaSemana == diaSemana);
+                    var detalle = db.DetalleHorarios
+                        .FirstOrDefault(d => d.IdAsignacion == asignacion.Id && d.DiaSemana == diaSemana);
 
-                if (detalle == null)
-                {
-                    Logger.Agregar($"⚠️ No se encontró horario para el día {diaSemana} en la asignación ID {asignacion.Id}.");
-                    new MensajeWindow("⚠ No hay horario configurado para hoy. Por favor contacte al administrador.", 4, "advertencia")
+                    if (detalle == null)
                     {
-                        Owner = this,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                    }.ShowDialog();
-                    lblTipoMarcacion.Text = "Sin horario";
-                    lblEstadoMarcacion.Text = "⛔";
-                    return;
-                }
+                        Logger.Agregar($"⚠️ No se encontró detalle de horario para el día {diaSemana}.");
+                        MostrarMensaje("⚠ No hay horario configurado para hoy.");
+                        LimpiarFormulario();
+                        _capturaService.IniciarCaptura();
+                        return;
+                    }
 
-                TimeOnly horaActual = TimeOnly.FromDateTime(hoy);
-                TimeOnly entrada = detalle.HoraInicio;
-                TimeOnly salida = detalle.HoraFin;
+                    TimeOnly horaActual = TimeOnly.FromDateTime(hoy);
+                    TimeOnly entrada = detalle.HoraInicio;
+                    TimeOnly salida = detalle.HoraFin;
 
-                var yaMarcoHoy = db.Marcaciones.Any(m =>
-                    m.IdEmpleado == empleado.IdEmpleado &&
-                    m.FechaHora.Date == hoy.Date);
+                    var yaMarcoHoy = db.Marcaciones.Any(m =>
+                        m.IdEmpleado == empleado.IdEmpleado &&
+                        m.FechaHora.Date == hoy.Date);
 
-                int tipoMarcacion;
-                string tipoTexto;
+                    int tipoMarcacion;
+                    string tipoTexto;
 
-                if (!yaMarcoHoy)
-                {
-                    tipoMarcacion = 1;
-                    tipoTexto = "Entrada";
-                }
-                else if (horaActual >= entrada.AddHours(-1) && horaActual <= entrada.AddHours(1))
-                {
-                    tipoMarcacion = 1;
-                    tipoTexto = "Entrada";
-                }
-                else if (horaActual >= salida.AddHours(-1) && horaActual <= salida.AddHours(1))
-                {
-                    tipoMarcacion = 2;
-                    tipoTexto = "Salida";
-                }
-                else
-                {
-                    tipoMarcacion = 3;
-                    tipoTexto = "Novedad";
-                }
-
-                var cincoMinutosAtras = hoy.AddMinutes(-5);
-                var ultima = db.Marcaciones
-                    .Where(m => m.IdEmpleado == empleado.IdEmpleado && m.FechaHora >= cincoMinutosAtras)
-                    .OrderByDescending(m => m.FechaHora)
-                    .FirstOrDefault();
-
-                if (ultima != null)
-                {
-                    var diferencia = hoy - ultima.FechaHora;
-                    var mensaje = $"⚠ {empleado.Nombres} ya registró una marcación de tipo {ultima.IdTipoMarcacion} hace {diferencia.Minutes} min {diferencia.Seconds} seg.";
-                    Logger.Agregar(mensaje);
-                    new MensajeWindow(mensaje + "\n⏳ Debe esperar 5 minutos.", 5, "advertencia")
+                    if (!yaMarcoHoy)
                     {
-                        Owner = this,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                    }.ShowDialog();
+                        tipoMarcacion = 1;
+                        tipoTexto = "Entrada";
+                    }
+                    else if (horaActual >= entrada.AddHours(-1) && horaActual <= entrada.AddHours(1))
+                    {
+                        tipoMarcacion = 1;
+                        tipoTexto = "Entrada";
+                    }
+                    else if (horaActual >= salida.AddHours(-1) && horaActual <= salida.AddHours(1))
+                    {
+                        tipoMarcacion = 2;
+                        tipoTexto = "Salida";
+                    }
+                    else
+                    {
+                        tipoMarcacion = 3;
+                        tipoTexto = "Novedad";
+                    }
+
+                    var cincoMinutosAtras = hoy.AddMinutes(-5);
+                    var ultima = db.Marcaciones
+                        .Where(m => m.IdEmpleado == empleado.IdEmpleado && m.FechaHora >= cincoMinutosAtras)
+                        .OrderByDescending(m => m.FechaHora)
+                        .FirstOrDefault();
+
+                    if (ultima != null)
+                    {
+                        var diferencia = hoy - ultima.FechaHora;
+                        MostrarMensaje($"⚠ Marcó hace {diferencia.Minutes} min {diferencia.Seconds} seg. Espere 5 min.");
+                        LimpiarFormulario();
+                        _capturaService.IniciarCaptura();
+                        return;
+                    }
+
+                    var marcacion = new Marcacione
+                    {
+                        IdEmpleado = empleado.IdEmpleado,
+                        FechaHora = hoy,
+                        IdEmpresa = empleado.IdEmpresa,
+                        IdSede = ConfiguracionSistema.IdSedeActual ?? empleado.IdSede,
+                        IdTipoMarcacion = tipoMarcacion,
+                        IdAsignacion = asignacion.Id
+                    };
+
+                    db.Marcaciones.Add(marcacion);
+                    db.SaveChanges();
+
+                    lblTipoMarcacion.Text = tipoTexto;
+                    lblEstadoMarcacion.Text = "✔ Registrado";
+
+                    Logger.Agregar($"📝 {tipoTexto} registrada para {empleado.Nombres} ({empleado.Documento})");
+
+                    new MensajeWindow($"✅ {tipoTexto} registrada\nHora: {hoy:HH:mm:ss}", 3).Show();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Agregar($"❌ Error en marcación: {ex.Message}");
+                    MostrarMensaje("❌ Error al registrar marcación.");
+                    LimpiarFormulario();
+                }
+                finally
+                {
                     _capturaService.IniciarCaptura();
-                    return;
                 }
-
-                var marcacion = new Marcacione
-                {
-                    IdEmpleado = empleado.IdEmpleado,
-                    FechaHora = hoy,
-                    IdEmpresa = empleado.IdEmpresa,
-                    IdSede = ConfiguracionSistema.IdSedeActual ?? empleado.IdSede,
-                    IdTipoMarcacion = tipoMarcacion,
-                    IdAsignacion = asignacion.Id
-                };
-
-                db.Marcaciones.Add(marcacion);
-                db.SaveChanges();
-
-                lblTipoMarcacion.Text = tipoTexto;
-                lblEstadoMarcacion.Text = "✔ Registrado";
-
-                string hora = hoy.ToString("HH:mm:ss");
-                Logger.Agregar($"📝 {tipoTexto} registrada para {empleado.Nombres} a las {hora}");
-                new MensajeWindow($"✅ {tipoTexto} registrada\nHora: {hora}", 3)
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                }.ShowDialog();
-
-                _capturaService.IniciarCaptura();
-            }
-            catch (Exception ex)
-            {
-                Logger.Agregar("❌ Error al registrar la marcación: " + ex.Message);
-                MostrarMensaje("❌ Error al registrar la marcación: " + ex.Message);
-                lblTipoMarcacion.Text = "Error";
-                lblEstadoMarcacion.Text = "⛔";
-            }
+            });
         }
-
 
         protected override void OnClosed(EventArgs e)
         {

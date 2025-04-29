@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|c:\\users\\diego vml\\documents\\proyectos\\sistemabiometricowpf\\biomentricoholding\\views\\empleado\\capturaentradasalidawindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|solutionrelative:views\\empleado\\capturaentradasalidawindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|c:\\users\\diego vml\\documents\\proyectos\\sistemabiometricowpf\\biomentricoholding\\views\\empleado\\capturaentradasalidawindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|solutionrelative:views\\empleado\\capturaentradasalidawindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|c:\\users\\diego vml\\documents\\proyectos\\sistemabiometricowpf\\biomentricoholding\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|solutionrelative:views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -21,14 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|c:\\users\\diego vml\\documents\\proyectos\\sistemabiometricowpf\\biomentricoholding\\views\\empleado\\capturarhuellawindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|solutionrelative:views\\empleado\\capturarhuellawindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|c:\\users\\diego vml\\documents\\proyectos\\sistemabiometricowpf\\biomentricoholding\\views\\empleado\\capturaentradasalidawindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|solutionrelative:views\\empleado\\capturaentradasalidawindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|c:\\users\\diego vml\\documents\\proyectos\\sistemabiometricowpf\\biomentricoholding\\views\\empleado\\capturaentradasalidawindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|solutionrelative:views\\empleado\\capturaentradasalidawindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{062F2259-EA59-4609-A11F-611517935927}|BiomentricoHolding.csproj|c:\\users\\diego vml\\documents\\proyectos\\sistemabiometricowpf\\biomentricoholding\\views\\empleado\\mensajewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -66,11 +66,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\MainWindow.xaml",
               "RelativeDocumentMoniker": "Views\\MainWindow.xaml",
@@ -78,18 +78,6 @@
               "RelativeToolTip": "Views\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-04-24T12:34:28.317Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "BiomentricoHolding",
-              "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\BiomentricoHolding.csproj",
-              "RelativeDocumentMoniker": "BiomentricoHolding.csproj",
-              "ToolTip": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\BiomentricoHolding.csproj",
-              "RelativeToolTip": "BiomentricoHolding.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-24T05:36:33.879Z",
               "EditorCaption": ""
             },
             {
@@ -105,18 +93,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "CapturaEntradaSalidaWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\Empleado\\CapturaEntradaSalidaWindow.xaml",
               "RelativeDocumentMoniker": "Views\\Empleado\\CapturaEntradaSalidaWindow.xaml",
               "ToolTip": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\Empleado\\CapturaEntradaSalidaWindow.xaml",
               "RelativeToolTip": "Views\\Empleado\\CapturaEntradaSalidaWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-23T21:37:12.551Z"
+              "WhenOpened": "2025-04-23T21:37:12.551Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "MiniLoginWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\Empleado\\MiniLoginWindow.xaml",
               "RelativeDocumentMoniker": "Views\\Empleado\\MiniLoginWindow.xaml",
@@ -127,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "RegistrarEmpleado.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\Empleado\\RegistrarEmpleado.xaml.cs",
               "RelativeDocumentMoniker": "Views\\Empleado\\RegistrarEmpleado.xaml.cs",
@@ -139,19 +128,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "CapturaEntradaSalidaWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\Empleado\\CapturaEntradaSalidaWindow.xaml.cs",
               "RelativeDocumentMoniker": "Views\\Empleado\\CapturaEntradaSalidaWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\Empleado\\CapturaEntradaSalidaWindow.xaml.cs",
               "RelativeToolTip": "Views\\Empleado\\CapturaEntradaSalidaWindow.xaml.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAIwMAAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAUwCcBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T17:33:32.562Z"
+              "WhenOpened": "2025-04-23T17:33:32.562Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
+              "Title": "BiomentricoHolding",
+              "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\BiomentricoHolding.csproj",
+              "RelativeDocumentMoniker": "BiomentricoHolding.csproj",
+              "ToolTip": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\BiomentricoHolding.csproj",
+              "RelativeToolTip": "BiomentricoHolding.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-24T05:36:33.879Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "CapturarHuellaWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\Views\\Empleado\\CapturarHuellaWindow.xaml.cs",
               "RelativeDocumentMoniker": "Views\\Empleado\\CapturarHuellaWindow.xaml.cs",
@@ -207,8 +208,7 @@
               "RelativeToolTip": "Views\\MainWindow.xaml.cs",
               "ViewState": "AgIAADMAAAAAAAAAAAAcwEoAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T12:47:04.181Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-23T12:47:04.181Z"
             },
             {
               "$type": "Document",
