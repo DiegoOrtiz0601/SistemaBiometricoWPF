@@ -527,3 +527,135 @@
 [07:53:39] 🚫 Acceso denegado al módulo de Reportes
 [07:53:47] 🔄 Abriendo formulario de Registro de Empleado
 [07:53:50] ↩️ Usuario volvió a la pantalla principal desde RegistroEmpleado
+[08:37:05] 📡 Iniciando módulo de verificación de huella.
+[08:37:08] 🧠 Procesando muestra de huella digital...
+[08:37:10] ❌ Huella no coincide con ningún empleado registrado.
+[08:37:19] 🧠 Procesando muestra de huella digital...
+[08:37:20] ❌ Huella no coincide con ningún empleado registrado.
+[08:37:24] 🧠 Procesando muestra de huella digital...
+[08:37:26] ❌ Huella no coincide con ningún empleado registrado.
+[08:37:28] 🧠 Procesando muestra de huella digital...
+[08:37:29] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[08:37:29] 📝 Entrada registrada para PRUEBA (980980980)
+[08:37:37] 🧠 Procesando muestra de huella digital...
+[08:37:39] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:37:39] 📝 Entrada registrada para DIEGO ARMANDO (80550594)
+[08:37:46] 🧠 Procesando muestra de huella digital...
+[08:37:47] ❌ Huella no coincide con ningún empleado registrado.
+[08:37:50] 🧠 Procesando muestra de huella digital...
+[08:37:52] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:37:54] 🧠 Procesando muestra de huella digital...
+[08:37:55] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:38:10] 🧠 Procesando muestra de huella digital...
+[08:38:11] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:38:13] 🧠 Procesando muestra de huella digital...
+[08:38:14] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:38:18] 🧠 Procesando muestra de huella digital...
+[08:38:20] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:38:21] 🧠 Procesando muestra de huella digital...
+[08:38:23] ✅ Huella verificada: Prueba Prueba (1075651331)
+[08:38:23] ⚠️ No se encontró detalle de horario para el día 1.
+[08:38:25] 🧠 Procesando muestra de huella digital...
+[08:38:26] ❌ Huella no coincide con ningún empleado registrado.
+[08:38:29] 🧠 Procesando muestra de huella digital...
+[08:38:31] ❌ Huella no coincide con ningún empleado registrado.
+[08:39:32] 🧠 Procesando muestra de huella digital...
+[08:39:33] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:41:59] 🔐 Acceso autorizado a Configuración
+[08:41:59] ✔️ Sede actual cargada: UNICENTRO
+[08:47:20] 📡 Iniciando módulo de verificación de huella.
+[08:47:23] 🧠 Procesando muestra de huella digital...
+[08:47:24] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:54:30] 🚫 Acceso denegado al módulo de Reportes
+[08:54:33] 📡 Iniciando módulo de verificación de huella.
+[08:54:35] 🧠 Procesando muestra de huella digital...
+[08:54:36] ❌ Huella no coincide con ningún empleado registrado.
+[08:54:38] 🧠 Procesando muestra de huella digital...
+[08:54:39] ❌ Huella no coincide con ningún empleado registrado.
+[08:54:41] 🧠 Procesando muestra de huella digital...
+[08:54:42] ❌ Huella no coincide con ningún empleado registrado.
+[08:54:44] 🧠 Procesando muestra de huella digital...
+[08:54:45] ❌ Huella no coincide con ningún empleado registrado.
+[08:54:46] 🧠 Procesando muestra de huella digital...
+[08:54:47] ❌ Huella no coincide con ningún empleado registrado.
+[08:54:49] 🧠 Procesando muestra de huella digital...
+[08:54:50] ✅ Huella verificada: JORGE ARTURO PEÑA PEÑA (1075651412)
+[08:54:50] ⚠️ No se encontró detalle de horario para el día 1.
+[08:55:07] 🧠 Procesando muestra de huella digital...
+[08:55:08] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:55:08] 📝 Entrada registrada para DIEGO ARMANDO (80550594)
+[08:55:12] 🧠 Procesando muestra de huella digital...
+[08:55:13] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[08:55:13] ⚠ DIEGO ARMANDO ya marcó hace 0 min 4 seg.
+⏳ Debe esperar 5 minutos.
+[08:55:21] 🧠 Procesando muestra de huella digital...
+[08:55:22] ✅ Huella verificada: JORGE ARTURO PEÑA PEÑA (1075651412)
+[08:55:23] ⚠️ No se encontró detalle de horario para el día 1.
+[08:55:52] 🧠 Procesando muestra de huella digital...
+[08:58:34] 📡 Iniciando módulo de verificación de huella.
+[08:58:38] 🧠 Procesando muestra de huella digital...
+[08:58:39] ✅ Huella verificada: JORGE ARTURO PEÑA PEÑA (1075651412)
+[08:58:39] ⚠️ No se encontró detalle de horario para el día 1.
+[08:58:58] 📡 Iniciando módulo de verificación de huella.
+[08:59:00] 🧠 Procesando muestra de huella digital...
+[09:02:31] 🔄 Abriendo formulario de Registro de Empleado
+[09:02:39] ✏️ Usuario con cédula 1075651331 desea modificar datos.
+[09:02:39] 🏢 Empresa seleccionada: ID 3
+[09:02:39] 🏢 Empresa seleccionada: ID 3
+[09:02:39] 📍 Sede seleccionada: ID 4
+[09:02:39] 📍 Sede seleccionada: ID 4
+[09:02:39] 🧬 Huella digital cargada desde base de datos
+[09:02:39] 📄 Datos cargados para modificar empleado ID: 1349
+[09:02:42] 📸 Intentando iniciar captura de huella
+[09:02:50] ✅ Huella capturada correctamente
+[09:02:53] 📥 [DESKTOP ] Botón Registrar presionado
+[09:02:53] ✏️ [DESKTOP ] Modificando empleado ID 1349
+[09:02:54] ✅ [DESKTOP ] Se mantuvo el horario actual para empleado ID 1349
+[09:02:55] 🧹 Formulario de empleado limpiado
+[09:02:58] 📡 Iniciando módulo de verificación de huella.
+[09:03:00] 🧠 Procesando muestra de huella digital...
+[09:03:01] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:03:01] ⚠️ No se encontró detalle de horario para el día 1.
+[09:03:02] 🧠 Procesando muestra de huella digital...
+[09:03:03] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:03:03] ⚠️ No se encontró detalle de horario para el día 1.
+[09:03:52] 📡 Iniciando módulo de verificación de huella.
+[09:03:56] 🧠 Procesando muestra de huella digital...
+[09:03:57] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:03:57] ⚠️ No se encontró detalle de horario para el día 1.
+[09:04:11] 🔐 Acceso autorizado a Configuración
+[09:04:11] ✔️ Sede actual cargada: UNICENTRO
+[09:12:10] 📡 Iniciando módulo de verificación de huella.
+[09:12:13] 🧠 Procesando muestra de huella digital...
+[09:17:05] ❌ Huella no coincide con ningún empleado registrado.
+[09:17:23] 🧠 Procesando muestra de huella digital...
+[09:17:31] ❌ Huella no coincide con ningún empleado registrado.
+[09:17:39] 🧠 Procesando muestra de huella digital...
+[09:17:45] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:17:45] ⚠️ No se encontró detalle de horario para el día 1.
+[09:18:47] 🔐 Acceso autorizado a Configuración
+[09:18:47] ✔️ Sede actual cargada: UNICENTRO
+[09:21:23] 📡 Iniciando módulo de verificación de huella.
+[09:21:26] 🧠 Procesando muestra de huella digital...
+[09:21:27] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:21:27] ⚠️ No se encontró detalle de horario para el día 1.
+[09:23:13] 📡 Iniciando módulo de verificación de huella.
+[09:23:16] 🧠 Procesando muestra de huella digital...
+[09:23:27] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:32:54] 📡 Iniciando módulo de verificación de huella.
+[09:32:56] 🧠 Procesando muestra de huella digital...
+[09:32:57] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:32:57] 📝 Entrada registrada para PRUEBA (1075651331)
+[09:36:40] 📡 Iniciando módulo de verificación de huella.
+[09:36:53] 🧠 Procesando muestra de huella digital...
+[09:36:53] ✅ Huella verificada: CARLOS MAHECHA (80099806)
+[09:36:53] 📝 Entrada registrada para CARLOS (80099806)
+[09:47:50] 📡 Iniciando módulo de verificación de huella.
+[09:47:51] 🧠 Procesando muestra de huella digital...
+[09:47:52] ✅ Huella verificada: PRUEBA PRUEBA (1075651331)
+[09:47:52] ⚠️ PRUEBA realizó una marcación fuera de horario de salida. Se registrará como NOVEDAD.
+[09:47:53] 📝 Novedad registrada para PRUEBA (1075651331)
+[09:47:57] 🧠 Procesando muestra de huella digital...
+[09:47:58] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[09:47:58] ⚠️ DIEGO ARMANDO realizó una marcación fuera de horario de salida. Se registrará como NOVEDAD.
+[09:47:58] 📝 Novedad registrada para DIEGO ARMANDO (80550594)

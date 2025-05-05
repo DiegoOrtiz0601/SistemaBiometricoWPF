@@ -4506,23 +4506,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Diego VML\\.nuget\\packages\\": {},
+    "C:\\Users\\Diego Mora\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.8",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\BiomentricoHolding.csproj",
+      "projectUniqueName": "C:\\Users\\Diego Mora\\Documents\\biometric\\biometricoVML\\BiomentricoHolding.csproj",
       "projectName": "BiomentricoHolding",
-      "projectPath": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\BiomentricoHolding.csproj",
-      "packagesPath": "C:\\Users\\Diego VML\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Diego VML\\Documents\\Proyectos\\SistemaBiometricoWPF\\BiomentricoHolding\\obj\\",
+      "projectPath": "C:\\Users\\Diego Mora\\Documents\\biometric\\biometricoVML\\BiomentricoHolding.csproj",
+      "packagesPath": "C:\\Users\\Diego Mora\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Diego Mora\\Documents\\biometric\\biometricoVML\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Diego VML\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Diego Mora\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

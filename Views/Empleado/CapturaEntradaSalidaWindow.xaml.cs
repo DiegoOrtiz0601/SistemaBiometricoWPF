@@ -172,7 +172,7 @@ namespace BiomentricoHolding.Views.Empleado
 
         private void DeterminarTipoMarcacion(EmpleadoModel empleado)
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 try
                 {
@@ -180,7 +180,7 @@ namespace BiomentricoHolding.Views.Empleado
 
                     var hoy = DateTime.Now;
                     var diaSemana = (int)hoy.DayOfWeek;
-                    if (diaSemana == 0) diaSemana = 7;
+                    diaSemana = diaSemana == 0 ? 1 : diaSemana + 1;
 
                     var asignacion = db.AsignacionHorarios
                         .FirstOrDefault(a => a.IdEmpleado == empleado.IdEmpleado && a.Estado);
@@ -188,10 +188,15 @@ namespace BiomentricoHolding.Views.Empleado
                     if (asignacion == null)
                     {
                         Logger.Agregar($"⚠️ {empleado.Nombres} no tiene una asignación de horario activa.");
-                        MostrarMensaje("⚠ No hay horario asignado. Contacte al administrador.");
+                        new MensajeWindow("⚠ No hay horario asignado para este colaborador.\nContacte al administrador.", 4, "advertencia")
+                        {
+                            Owner = this,
+                            WindowStartupLocation = WindowStartupLocation.CenterOwner
+                        }.ShowDialog();
                         LimpiarFormulario();
                         _capturaService.IniciarCaptura();
                         return;
+
                     }
 
                     var detalle = db.DetalleHorarios
@@ -200,11 +205,21 @@ namespace BiomentricoHolding.Views.Empleado
                     if (detalle == null)
                     {
                         Logger.Agregar($"⚠️ No se encontró detalle de horario para el día {diaSemana}.");
-                        MostrarMensaje("⚠ No hay horario configurado para hoy.");
-                        LimpiarFormulario();
-                        _capturaService.IniciarCaptura();
+
+                        var ventana = new MensajeWindow("⚠ No hay horario configurado para hoy.", 4, "advertencia")
+                        {
+                            Owner = this,
+                            WindowStartupLocation = WindowStartupLocation.CenterOwner
+                        };
+                        ventana.Closed += (s, e) =>
+                        {
+                            LimpiarFormulario();
+                            _capturaService.IniciarCaptura();
+                        };
+                        ventana.ShowDialog();
                         return;
                     }
+
 
                     TimeOnly horaActual = TimeOnly.FromDateTime(hoy);
                     TimeOnly entrada = detalle.HoraInicio;
@@ -219,39 +234,50 @@ namespace BiomentricoHolding.Views.Empleado
 
                     if (!yaMarcoHoy)
                     {
-                        tipoMarcacion = 1;
-                        tipoTexto = "Entrada";
-                    }
-                    else if (horaActual >= entrada.AddHours(-1) && horaActual <= entrada.AddHours(1))
-                    {
+                        // Primera marcación del día: Entrada
                         tipoMarcacion = 1;
                         tipoTexto = "Entrada";
                     }
                     else if (horaActual >= salida.AddHours(-1) && horaActual <= salida.AddHours(1))
                     {
+                        // Segunda marcación cerca de la hora de salida: Salida
                         tipoMarcacion = 2;
                         tipoTexto = "Salida";
                     }
                     else
                     {
+                        // Cualquier otra fuera del rango de salida: Novedad
                         tipoMarcacion = 3;
                         tipoTexto = "Novedad";
+                        Logger.Agregar($"⚠️ {empleado.Nombres} realizó una marcación fuera de horario de salida. Se registrará como NOVEDAD.");
                     }
 
+
+
                     var cincoMinutosAtras = hoy.AddMinutes(-5);
+
                     var ultima = db.Marcaciones
-                        .Where(m => m.IdEmpleado == empleado.IdEmpleado && m.FechaHora >= cincoMinutosAtras)
-                        .OrderByDescending(m => m.FechaHora)
-                        .FirstOrDefault();
+                    .Where(m => m.IdEmpleado == empleado.IdEmpleado && m.FechaHora >= cincoMinutosAtras)
+                     .OrderByDescending(m => m.FechaHora)
+                    .FirstOrDefault();
 
                     if (ultima != null)
                     {
                         var diferencia = hoy - ultima.FechaHora;
-                        MostrarMensaje($"⚠ Marcó hace {diferencia.Minutes} min {diferencia.Seconds} seg. Espere 5 min.");
+                        string mensaje = $"⚠ {empleado.Nombres} ya marcó hace {diferencia.Minutes} min {diferencia.Seconds} seg.\n⏳ Debe esperar 5 minutos.";
+                        Logger.Agregar(mensaje);
+
+                        new MensajeWindow(mensaje, 5, "advertencia")
+                        {
+                            Owner = this,
+                            WindowStartupLocation = WindowStartupLocation.CenterOwner
+                        }.ShowDialog();
+
                         LimpiarFormulario();
                         _capturaService.IniciarCaptura();
                         return;
                     }
+
 
                     var marcacion = new Marcacione
                     {

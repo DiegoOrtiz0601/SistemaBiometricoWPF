@@ -52,7 +52,8 @@ namespace BiomentricoHolding.Views.Configuracion {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BiomentricoHolding;component/views/configuracion/bienvenidainicialwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/BiomentricoHolding;V1.0.8.0;component/views/configuracion/bienvenidainicialwindo" +
+                    "w.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Configuracion\BienvenidaInicialWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

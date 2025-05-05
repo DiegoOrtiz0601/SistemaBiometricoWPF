@@ -1,0 +1,82 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.log
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# Visual Studio cache files
+*.vc.db
+*.vscode/
+
+# Build logs
+*.tlog
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# DotCover
+*.dcvr
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# TFS
+$tf/
+
+# Microsoft Azure Web Apps
+.publish/
+
+# IIS Express
+*.vspscc
+.vs/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Runtime files
+*.db
+*.pdb
+*.mdb
+*.exe
+*.dll
+
+# Local test results
+TestResults/
+*.testsettings
+*.vsmdi
+*.cache
+*.coverage
+*.coveragexml
+
+# Entity Framework
+App_Data/
+
+# Logs
+*.log
+*.nlog
+
+# Others
+*.tmp
+*.bak
+*.old
+*.orig

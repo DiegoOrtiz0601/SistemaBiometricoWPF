@@ -140,7 +140,7 @@ namespace BiomentricoHolding.Views.Reportes {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BiomentricoHolding;component/views/reportes/reportesview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/BiomentricoHolding;V1.0.8.0;component/views/reportes/reportesview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Reportes\ReportesView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
