@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Define la base de la URL para las reescrituras.
+  # Como el dominio ahora apunta directamente a VML.Biometrico.Web,
+  # la base de reescritura es la raíz del dominio.
+  RewriteBase /
+ 
+  Options -Indexes
+
+  # --- Regla para el Backend (API) ---
+  # Si la solicitud comienza con /api/, reescríbela internamente
+  # al directorio 'backend/public'.
+  RewriteRule ^api/(.*)$ backend/public/$1 [L,NC]
+
+  # --- Reglas para el Frontend (React) ---
+  # Estas reglas se aplican si la solicitud NO es un archivo o directorio real
+  # Y si la solicitud NO comienza con /api/ (para que la regla del backend tenga prioridad)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule !^api/ frontend/dist/index.html [L]
+</IfModule>
