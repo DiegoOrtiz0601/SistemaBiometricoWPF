@@ -31,12 +31,22 @@ const SedeForm = ({ onSubmit, initialData, onCancel }) => {
                 ]);
 
                 if (empresasRes.data?.data) {
-                    setEmpresas(empresasRes.data.data);
+                    // Formatear empresas para el select
+                    const empresasFormateadas = empresasRes.data.data.map(empresa => ({
+                        value: empresa.IdEmpresa.toString(),
+                        label: empresa.Nombre
+                    }));
+                    setEmpresas(empresasFormateadas);
                 }
                 setLoadingEmpresas(false);
 
                 if (ciudadesRes.data?.data) {
-                    setCiudades(ciudadesRes.data.data);
+                    // Formatear ciudades para el select
+                    const ciudadesFormateadas = ciudadesRes.data.data.map(ciudad => ({
+                        value: ciudad.id.toString(),
+                        label: ciudad.nombre
+                    }));
+                    setCiudades(ciudadesFormateadas);
                 }
                 setLoadingCiudades(false);
 

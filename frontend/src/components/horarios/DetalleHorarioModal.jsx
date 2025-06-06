@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RiCloseLine } from 'react-icons/ri';
 
+
 const diasSemana = [
     { id: 1, nombre: 'Domingo' },
     { id: 2, nombre: 'Lunes' },

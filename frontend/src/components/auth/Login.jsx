@@ -18,17 +18,23 @@ const Login = () => {
         setLoading(true);
         setError('');
 
-        // Enviamos los campos con los nombres EXACTOS que espera Laravel
-        const result = await login({
-            Correo: credentials.email,
-            Contrasena: credentials.password
-        });
+        try {
+            // Enviamos los campos con los nombres EXACTOS que espera Laravel
+            const result = await login({
+                Correo: credentials.email,
+                Contrasena: credentials.password
+            });
 
-        if (!result.success) {
-            setError(result.message);
+            if (!result.success) {
+                setError(result.message || 'Credenciales inválidas');
+                setCredentials(prev => ({ ...prev, password: '' }));
+            }
+        } catch (error) {
+            setError(error.response?.data?.message || 'Error al iniciar sesión');
+            setCredentials(prev => ({ ...prev, password: '' }));
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     return (

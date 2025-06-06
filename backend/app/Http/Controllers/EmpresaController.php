@@ -10,34 +10,50 @@ class EmpresaController extends Controller
 {
     public function index(Request $request)
     {
-        $query = DB::table('Empresa');
-        
-        // Búsqueda
-        if ($request->has('search')) {
-            $searchTerm = $request->search;
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('Nombre', 'LIKE', "%{$searchTerm}%")
-                  ->orWhere('Direccion', 'LIKE', "%{$searchTerm}%")
-                  ->orWhere('Telefono', 'LIKE', "%{$searchTerm}%");
+        try {
+            $query = DB::table('Empresa')
+                ->select('IdEmpresa', 'Nombre', 'Direccion', 'Telefono', 'Estado');
+            
+            // Búsqueda
+            if ($request->has('search')) {
+                $searchTerm = $request->search;
+                $query->where(function($q) use ($searchTerm) {
+                    $q->where('Nombre', 'LIKE', "%{$searchTerm}%")
+                      ->orWhere('Direccion', 'LIKE', "%{$searchTerm}%")
+                      ->orWhere('Telefono', 'LIKE', "%{$searchTerm}%");
+                });
+            }
+
+            // Ordenamiento
+            $sortField = $request->input('sortField', 'Nombre');
+            $sortDirection = $request->input('sortDirection', 'asc');
+            $query->orderBy($sortField, $sortDirection);
+
+            // Paginación
+            $perPage = $request->input('perPage', 10);
+            $empresas = $query->paginate($perPage);
+
+            // Convertir explícitamente el estado a booleano
+            $empresas->through(function ($empresa) {
+                $empresa->Estado = (bool) $empresa->Estado;
+                return $empresa;
             });
+
+            return response()->json([
+                'success' => true,
+                'data' => $empresas->items(),
+                'current_page' => $empresas->currentPage(),
+                'last_page' => $empresas->lastPage(),
+                'per_page' => $empresas->perPage(),
+                'total' => $empresas->total()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las empresas: ' . $e->getMessage(),
+                'data' => []
+            ], 500);
         }
-
-        // Ordenamiento
-        $sortField = $request->input('sortField', 'Nombre');
-        $sortDirection = $request->input('sortDirection', 'asc');
-        $query->orderBy($sortField, $sortDirection);
-
-        // Paginación
-        $perPage = $request->input('perPage', 10);
-        $empresas = $query->paginate($perPage);
-
-        // Convertir explícitamente el estado a booleano
-        $empresas->through(function ($empresa) {
-            $empresa->Estado = (bool) $empresa->Estado;
-            return $empresa;
-        });
-
-        return Response::json($empresas);
     }
 
     public function store(Request $request)
@@ -52,7 +68,7 @@ class EmpresaController extends Controller
         // Aseguramos que Estado sea booleano
         $estado = filter_var($request->Estado, FILTER_VALIDATE_BOOLEAN);
 
-        $id = DB::table('Empresa')->insertGetId([
+        $id = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')->insertGetId([
             'Nombre' => $request->Nombre,
             'Direccion' => $request->Direccion,
             'Telefono' => $request->Telefono,
@@ -78,7 +94,7 @@ class EmpresaController extends Controller
         // Aseguramos que Estado sea booleano
         $estado = filter_var($request->Estado, FILTER_VALIDATE_BOOLEAN);
 
-        $updated = DB::table('Empresa')
+        $updated = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')
             ->where('IdEmpresa', $id)
             ->update([
                 'Nombre' => $request->Nombre,
@@ -102,7 +118,7 @@ class EmpresaController extends Controller
 
     public function destroy($id)
     {
-        $deleted = DB::table('Empresa')
+        $deleted = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')
             ->where('IdEmpresa', $id)
             ->delete();
 
@@ -121,7 +137,7 @@ class EmpresaController extends Controller
 
     public function getActivas()
     {
-        $empresas = DB::table('Empresa')
+        $empresas = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')
             ->where('Estado', true)
             ->select('IdEmpresa', 'Nombre')
             ->orderBy('Nombre')
@@ -131,5 +147,26 @@ class EmpresaController extends Controller
             'status' => 'success',
             'data' => $empresas
         ]);
+    }
+
+    public function empresasActivas()
+    {
+        try {
+            $empresas = DB::table('Empresa')
+                ->select('IdEmpresa as id', 'Nombre as nombre')
+                ->where('Estado', 1)
+                ->orderBy('Nombre')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $empresas
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las empresas: ' . $e->getMessage()
+            ], 500);
+        }
     }
 } 

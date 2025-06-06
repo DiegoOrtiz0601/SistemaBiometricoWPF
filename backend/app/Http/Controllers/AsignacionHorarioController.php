@@ -131,7 +131,10 @@ class AsignacionHorarioController extends Controller
     public function cargaMasiva(Request $request)
     {
         try {
+            Log::info('Iniciando carga masiva de horarios');
+            
             if (!$request->hasFile('archivo')) {
+                Log::error('No se proporcionó ningún archivo');
                 return response()->json([
                     'success' => false,
                     'message' => 'No se ha proporcionado ningún archivo'
@@ -139,8 +142,16 @@ class AsignacionHorarioController extends Controller
             }
 
             $file = $request->file('archivo');
+            Log::info('Archivo recibido', [
+                'nombre' => $file->getClientOriginalName(),
+                'tamaño' => $file->getSize(),
+                'tipo' => $file->getMimeType()
+            ]);
             
             if ($file->getClientOriginalExtension() !== 'csv') {
+                Log::error('Extensión de archivo inválida', [
+                    'extension' => $file->getClientOriginalExtension()
+                ]);
                 return response()->json([
                     'success' => false,
                     'message' => 'El archivo debe ser un CSV'
@@ -302,9 +313,15 @@ class AsignacionHorarioController extends Controller
             fclose($handle);
 
             if (!empty($erroresPorDocumento)) {
+                // Construir mensaje detallado de errores
+                $mensajeResumen = [];
+                foreach ($erroresPorDocumento as $doc => $datos) {
+                    $mensajeResumen[] = "Documento {$datos['documento']}: Ya existe un horario activo para las fechas indicadas";
+                }
+
                 return response()->json([
                     'success' => false,
-                    'message' => 'Se encontraron errores en el archivo',
+                    'message' => implode("\n", $mensajeResumen),
                     'errores' => [
                         'errores_por_documento' => $erroresPorDocumento
                     ]
@@ -351,40 +368,100 @@ class AsignacionHorarioController extends Controller
 
                 $registrosProcesados = 0;
                 foreach ($registros as $registro) {
-                    // Inhabilitar asignaciones previas
-                    DB::table('AsignacionHorarios')
+                    // Buscar horarios que se solapan con las nuevas fechas
+                    $horariosExistentes = DB::table('AsignacionHorarios')
                         ->where('IdEmpleado', $registro['empleado']->IdEmpleado)
                         ->where('Estado', true)
-                        ->update(['Estado' => false]);
+                        ->where(function($query) use ($registro) {
+                            $query->where(function($q) use ($registro) {
+                                // Caso 1: La fecha de inicio está dentro del rango existente
+                                $q->where('FechaInicio', '<=', $registro['fechaInicio'])
+                                  ->where('FechaFin', '>=', $registro['fechaInicio']);
+                            })->orWhere(function($q) use ($registro) {
+                                // Caso 2: La fecha de fin está dentro del rango existente
+                                $q->where('FechaInicio', '<=', $registro['fechaFin'])
+                                  ->where('FechaFin', '>=', $registro['fechaFin']);
+                            })->orWhere(function($q) use ($registro) {
+                                // Caso 3: El nuevo rango contiene completamente al rango existente
+                                $q->where('FechaInicio', '>=', $registro['fechaInicio'])
+                                  ->where('FechaFin', '<=', $registro['fechaFin']);
+                            });
+                        })
+                        ->get();
 
-                    // Crear la nueva asignación
-                    $idAsignacion = DB::table('AsignacionHorarios')->insertGetId([
-                        'IdEmpleado' => $registro['empleado']->IdEmpleado,
-                        'FechaInicio' => $registro['fechaInicio'],
-                        'FechaFin' => $registro['fechaFin'],
-                        'FechaCreacion' => now(),
-                        'CreadoPor' => $usuario->IdUsuario,
-                        'Estado' => true,
-                        'TipoHorario' => 1
-                    ]);
+                    if ($horariosExistentes->count() > 0) {
+                        // Agregar error de solapamiento al array de errores
+                        $erroresActuales[] = sprintf(
+                            "Ya existe un horario activo para el período %s - %s",
+                            $registro['fechaInicio'],
+                            $registro['fechaFin']
+                        );
 
-                    // Crear los detalles del horario
-                    foreach ($registro['detalles'] as $detalle) {
-                        DB::table('DetalleHorarios')->insert([
-                            'IdAsignacion' => $idAsignacion,
-                            'DiaSemana' => $detalle['DiaSemana'],
-                            'HoraInicio' => $detalle['HoraInicio'],
-                            'HoraFin' => $detalle['HoraFin']
-                        ]);
+                        // Agregar detalles de los horarios que se solapan
+                        foreach ($horariosExistentes as $horario) {
+                            $erroresActuales[] = sprintf(
+                                "→ Horario existente del %s al %s",
+                                $horario->FechaInicio,
+                                $horario->FechaFin
+                            );
+                        }
+
+                        // Si hay errores, los guardamos agrupados por documento
+                        if (!isset($erroresPorDocumento[$documento])) {
+                            $erroresPorDocumento[$documento] = [
+                                'documento' => $documento,
+                                'linea' => $linea,
+                                'errores' => []
+                            ];
+                        }
+                        $erroresPorDocumento[$documento]['errores'] = array_merge(
+                            $erroresPorDocumento[$documento]['errores'] ?? [],
+                            $erroresActuales
+                        );
+                        continue; // Saltamos al siguiente registro
                     }
-                    $registrosProcesados++;
+
+                    // Si no hay errores, procedemos con la creación del nuevo horario
+                    if (empty($erroresActuales)) {
+                        // Crear la nueva asignación
+                        $idAsignacion = DB::table('AsignacionHorarios')->insertGetId([
+                            'IdEmpleado' => $registro['empleado']->IdEmpleado,
+                            'FechaInicio' => $registro['fechaInicio'],
+                            'FechaFin' => $registro['fechaFin'],
+                            'FechaCreacion' => now(),
+                            'CreadoPor' => $usuario->IdUsuario,
+                            'Estado' => true,
+                            'TipoHorario' => 1
+                        ]);
+
+                        // Crear los detalles del horario
+                        foreach ($registro['detalles'] as $detalle) {
+                            DB::table('DetalleHorarios')->insert([
+                                'IdAsignacion' => $idAsignacion,
+                                'DiaSemana' => $detalle['DiaSemana'],
+                                'HoraInicio' => $detalle['HoraInicio'],
+                                'HoraFin' => $detalle['HoraFin']
+                            ]);
+                        }
+                        $registrosProcesados++;
+                    }
+                }
+
+                if ($registrosProcesados === 0) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'No se pudo procesar ningún registro debido a conflictos con horarios existentes'
+                    ], 400);
                 }
 
                 DB::commit();
 
                 return response()->json([
                     'success' => true,
-                    'message' => "Se procesaron {$registrosProcesados} registros exitosamente"
+                    'message' => $registrosProcesados === 1 
+                        ? "Se procesó 1 registro exitosamente"
+                        : "Se procesaron {$registrosProcesados} registros exitosamente"
                 ]);
             } catch (Exception $e) {
                 DB::rollBack();

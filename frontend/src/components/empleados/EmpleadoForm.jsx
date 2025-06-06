@@ -39,11 +39,20 @@ const EmpleadoForm = ({ onSubmit, initialData, onCancel }) => {
                     axiosInstance.get('/empleados/tipos')
                 ]);
 
-                if (empresasRes.data?.data) {
-                    setEmpresas(empresasRes.data.data);
+                if (empresasRes.data?.success && empresasRes.data?.data) {
+                    const empresasFormateadas = empresasRes.data.data.map(empresa => ({
+                        value: empresa.id.toString(),
+                        label: empresa.nombre
+                    }));
+                    setEmpresas(empresasFormateadas);
                 }
+
                 if (tiposRes.data?.data) {
-                    setTiposEmpleado(tiposRes.data.data);
+                    const tiposFormateados = tiposRes.data.data.map(tipo => ({
+                        value: tipo.id.toString(),
+                        label: tipo.nombre
+                    }));
+                    setTiposEmpleado(tiposFormateados);
                 }
             } catch (error) {
                 console.error('Error al cargar datos base:', error);
@@ -62,17 +71,27 @@ const EmpleadoForm = ({ onSubmit, initialData, onCancel }) => {
         const loadSedes = async () => {
             if (!formData.IdEmpresa) {
                 setSedes([]);
+                setFormData(prev => ({ ...prev, IdSede: '', IdArea: '' }));
                 return;
             }
 
             try {
                 setLoadingSedes(true);
+                setFormData(prev => ({ ...prev, IdSede: '', IdArea: '' }));
+                setAreas([]); // Limpiar áreas cuando cambia la empresa
+                
                 const sedesRes = await axiosInstance.get(`/sedes/empresa/${formData.IdEmpresa}`);
-                if (sedesRes.data?.data) {
-                    setSedes(sedesRes.data.data);
+
+                if (sedesRes.data?.success && sedesRes.data?.data) {
+                    const sedesFormateadas = sedesRes.data.data.map(sede => ({
+                        value: sede.IdSede.toString(),
+                        label: sede.Nombre
+                    }));
+                    setSedes(sedesFormateadas);
                 }
             } catch (error) {
                 console.error('Error al cargar sedes:', error);
+                setSedes([]);
             } finally {
                 setLoadingSedes(false);
             }
@@ -86,17 +105,26 @@ const EmpleadoForm = ({ onSubmit, initialData, onCancel }) => {
         const loadAreas = async () => {
             if (!formData.IdSede) {
                 setAreas([]);
+                setFormData(prev => ({ ...prev, IdArea: '' }));
                 return;
             }
 
             try {
                 setLoadingAreas(true);
+                setFormData(prev => ({ ...prev, IdArea: '' }));
+                
                 const areasRes = await axiosInstance.get(`/areas/sede/${formData.IdSede}`);
-                if (areasRes.data?.data) {
-                    setAreas(areasRes.data.data);
+
+                if (areasRes.data?.success && areasRes.data?.data) {
+                    const areasFormateadas = areasRes.data.data.map(area => ({
+                        value: area.id.toString(),
+                        label: area.nombre
+                    }));
+                    setAreas(areasFormateadas);
                 }
             } catch (error) {
                 console.error('Error al cargar áreas:', error);
+                setAreas([]);
             } finally {
                 setLoadingAreas(false);
             }
@@ -125,15 +153,12 @@ const EmpleadoForm = ({ onSubmit, initialData, onCancel }) => {
                 IdSede: '',
                 IdArea: ''
             }));
-            setSedes([]);
-            setAreas([]);
         } else if (name === 'IdSede') {
             setFormData(prev => ({
                 ...prev,
                 [name]: value,
                 IdArea: ''
             }));
-            setAreas([]);
         } else {
             setFormData(prev => ({
                 ...prev,

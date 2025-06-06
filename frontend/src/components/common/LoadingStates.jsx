@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 
 export const LoadingSpinner = () => (
@@ -33,20 +33,23 @@ export const EmptyRow = ({ colSpan, message = "No hay datos disponibles" }) => (
     </tr>
 );
 
-export const LoadingButton = ({ children, loading, ...props }) => (
+export const LoadingButton = forwardRef(({ children, loading, className = '', ...props }, ref) => (
     <button
         {...props}
+        ref={ref}
         disabled={loading || props.disabled}
-        className={`relative ${props.className || ''}`}
+        className={`relative inline-flex items-center justify-center transition-all duration-200 ${className}`}
     >
         {loading && (
             <span className="absolute inset-0 flex items-center justify-center bg-inherit rounded-md">
-                <FaSpinner className="animate-spin text-current" />
+                <FaSpinner className="animate-spin text-current w-5 h-5" />
             </span>
         )}
         <span className={loading ? 'invisible' : ''}>{children}</span>
     </button>
-);
+));
+
+LoadingButton.displayName = 'LoadingButton';
 
 export const SelectWithLoading = ({ 
     label, 
@@ -76,10 +79,10 @@ export const SelectWithLoading = ({
                 <option value="">{isLoading ? "Cargando..." : placeholder}</option>
                 {!isLoading && options?.map(option => (
                     <option 
-                        key={option.id || option.IdEmpresa || option.IdSede || option.IdArea || option.IdCiudad} 
-                        value={option.id || option.IdEmpresa || option.IdSede || option.IdArea || option.IdCiudad}
+                        key={option.value} 
+                        value={option.value}
                     >
-                        {option.nombre || option.Nombre}
+                        {option.label}
                     </option>
                 ))}
             </select>

@@ -10,35 +10,86 @@ import {
     IconButton,
     Button,
     TextField,
-    InputAdornment
+    InputAdornment,
+    TablePagination
 } from '@mui/material';
 import { appIcons, appColors, sweetAlertConfig } from '../utils/theme';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosConfig';
 import { toast } from 'react-hot-toast';
+import { FaSpinner } from 'react-icons/fa';
 
 const Ciudades = () => {
     const [ciudades, setCiudades] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [pagination, setPagination] = useState({
+        currentPage: 1,
+        lastPage: 1,
+        perPage: 10,
+        total: 0
+    });
 
-    useEffect(() => {
-        fetchCiudades();
-    }, []);
+    const perPageOptions = [5, 10, 25, 50, 100];
 
     const fetchCiudades = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/ciudades`);
+            console.log("Iniciando petición de ciudades...");
+            const response = await axiosInstance.get('/ciudades', {
+                params: {
+                    page: pagination.currentPage,
+                    perPage: pagination.perPage,
+                    search: searchTerm
+                }
+            });
+
+            console.log("Respuesta del servidor:", response.data);
+
             if (response.data.success) {
-                setCiudades(response.data.data);
+                setCiudades(response.data.data || []);
+                setPagination(prev => ({
+                    ...prev,
+                    currentPage: response.data.current_page,
+                    lastPage: response.data.last_page,
+                    perPage: response.data.per_page,
+                    total: response.data.total
+                }));
+            } else {
+                throw new Error(response.data.message || 'Error al cargar las ciudades');
             }
         } catch (error) {
             console.error('Error al obtener ciudades:', error);
-            toast.error('Error al cargar las ciudades');
+            toast.error(error.message || 'Error al cargar las ciudades');
+            setCiudades([]);
+            setPagination(prev => ({
+                ...prev,
+                currentPage: 1,
+                lastPage: 1,
+                total: 0
+            }));
         } finally {
             setLoading(false);
         }
+    };
+
+    useEffect(() => {
+        fetchCiudades();
+    }, [pagination.currentPage, pagination.perPage, searchTerm]);
+
+    const handleChangePage = (event, newPage) => {
+        setPagination(prev => ({
+            ...prev,
+            currentPage: newPage + 1
+        }));
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setPagination(prev => ({
+            ...prev,
+            perPage: parseInt(event.target.value, 10),
+            currentPage: 1
+        }));
     };
 
     const handleDelete = async (id) => {
@@ -54,7 +105,7 @@ const Ciudades = () => {
             });
 
             if (result.isConfirmed) {
-                const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/ciudades/${id}`);
+                const response = await axiosInstance.delete(`/ciudades/${id}`);
                 if (response.data.success) {
                     toast.success('Ciudad eliminada exitosamente');
                     fetchCiudades();
@@ -83,7 +134,7 @@ const Ciudades = () => {
             });
 
             if (nombre) {
-                const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/ciudades/${ciudad.id}`, {
+                const response = await axiosInstance.put(`/ciudades/${ciudad.id}`, {
                     nombre,
                     estado: ciudad.estado
                 });
@@ -115,7 +166,7 @@ const Ciudades = () => {
             });
 
             if (nombre) {
-                const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/ciudades`, {
+                const response = await axiosInstance.post('/ciudades', {
                     nombre
                 });
 
@@ -129,10 +180,6 @@ const Ciudades = () => {
             toast.error('Error al crear la ciudad');
         }
     };
-
-    const filteredCiudades = ciudades.filter(ciudad =>
-        ciudad.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    );
 
     return (
         <div className="p-6">
@@ -177,18 +224,21 @@ const Ciudades = () => {
                         {loading ? (
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
-                                    Cargando...
+                                    <div className="flex flex-col items-center justify-center py-4">
+                                        <FaSpinner className="animate-spin text-4xl text-vml-red mb-2" />
+                                        <p>Cargando...</p>
+                                    </div>
                                 </TableCell>
                             </TableRow>
-                        ) : filteredCiudades.length === 0 ? (
+                        ) : ciudades.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
                                     No se encontraron ciudades
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            filteredCiudades.map((ciudad) => (
-                                <TableRow key={ciudad.id}>
+                            ciudades.map((ciudad) => (
+                                <TableRow key={ciudad.id || `temp-${Math.random()}`}>
                                     <TableCell>{ciudad.nombre}</TableCell>
                                     <TableCell>
                                         <span
@@ -220,6 +270,19 @@ const Ciudades = () => {
                         )}
                     </TableBody>
                 </Table>
+                <TablePagination
+                    component="div"
+                    count={pagination.total}
+                    page={pagination.currentPage - 1}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={pagination.perPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    rowsPerPageOptions={perPageOptions}
+                    labelRowsPerPage="Filas por página:"
+                    labelDisplayedRows={({ from, to, count }) => 
+                        `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`
+                    }
+                />
             </TableContainer>
         </div>
     );

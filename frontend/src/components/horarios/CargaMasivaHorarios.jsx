@@ -65,40 +65,153 @@ const CargaMasivaHorarios = ({ onClose, onSuccess }) => {
             setProcessingStatus('Validando archivo...');
             setUploadProgress(10);
 
+            console.log('Iniciando carga de archivo:', {
+                nombre: file.name,
+                tamaño: file.size,
+                tipo: file.type
+            });
+
             const formData = new FormData();
             formData.append('archivo', file);
 
-            const response = await axiosInstance.post('/asignacion-horarios/carga-masiva', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                onUploadProgress: (progressEvent) => {
-                    const progress = Math.round((progressEvent.loaded * 50) / progressEvent.total);
-                    setUploadProgress(progress);
+            try {
+                const response = await axiosInstance.post('/asignacion-horarios/carga-masiva', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: (progressEvent) => {
+                        const progress = Math.round((progressEvent.loaded * 50) / progressEvent.total);
+                        console.log('Progreso de carga:', progress + '%');
+                        setUploadProgress(progress);
+                    },
+                    maxContentLength: Infinity,
+                    maxBodyLength: Infinity,
+                    timeout: 0
+                });
+
+                console.log('Respuesta del servidor:', response.data);
+
+                if (response.data.success) {
+                    setProcessingStatus('Procesando registros...');
+                    setUploadProgress(75);
+
+                    // Simular progreso del procesamiento
+                    setTimeout(() => {
+                        setUploadProgress(100);
+                        setProcessingStatus('¡Proceso completado!');
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: response.data.message || 'Horarios cargados exitosamente',
+                            showConfirmButton: true
+                        }).then(() => {
+                            if (onSuccess) onSuccess();
+                            onClose();
+                        });
+                    }, 1000);
+                } else {
+                    throw new Error(response.data.message || 'Error al procesar el archivo');
                 }
-            });
+            } catch (error) {
+                console.error('Error en la carga:', error);
+                
+                if (error.response?.data?.errores?.errores_por_documento) {
+                    const errores = error.response.data.errores.errores_por_documento;
+                    let mensajeDetallado = '<div class="text-left space-y-4">';
 
-            if (response.data.success) {
-                setProcessingStatus('Procesando registros...');
-                setUploadProgress(75);
-
-                // Simular progreso del procesamiento
-                setTimeout(() => {
-                    setUploadProgress(100);
-                    setProcessingStatus('¡Proceso completado!');
-                    
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: response.data.message || 'Horarios cargados exitosamente',
-                        showConfirmButton: true
-                    }).then(() => {
-                        if (onSuccess) onSuccess();
-                        onClose();
+                    // Crear acordeón para cada documento
+                    Object.entries(errores).forEach(([documento, datos]) => {
+                        mensajeDetallado += `
+                            <div class="border rounded-lg overflow-hidden">
+                                <div class="bg-gray-100 p-3 flex justify-between items-center cursor-pointer" 
+                                     onclick="this.nextElementSibling.classList.toggle('hidden')">
+                                    <span class="font-bold">
+                                        ${datos.documento} 
+                                        <span class="text-sm text-gray-600">(Línea ${datos.linea})</span>
+                                    </span>
+                                    <svg class="w-5 h-5 transform transition-transform duration-200" 
+                                         style="transform: rotate(0deg);" 
+                                         fill="none" 
+                                         stroke="currentColor" 
+                                         viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" 
+                                              stroke-linejoin="round" 
+                                              stroke-width="2" 
+                                              d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                                <div class="hidden p-3 border-t">
+                                    ${datos.errores.map(error => `
+                                        <div class="flex items-start space-x-2 mb-2">
+                                            <span class="text-red-500">•</span>
+                                            <span>${error}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
                     });
-                }, 1000);
-            } else {
-                throw new Error(response.data.message || 'Error al procesar el archivo');
+
+                    mensajeDetallado += '</div>';
+
+                    // Agregar estilos CSS para la animación
+                    const styles = `
+                        <style>
+                            .text-left { text-align: left; }
+                            .space-y-4 > * + * { margin-top: 1rem; }
+                            .border { border: 1px solid #e2e8f0; }
+                            .rounded-lg { border-radius: 0.5rem; }
+                            .overflow-hidden { overflow: hidden; }
+                            .bg-gray-100 { background-color: #f7fafc; }
+                            .p-3 { padding: 0.75rem; }
+                            .flex { display: flex; }
+                            .justify-between { justify-content: space-between; }
+                            .items-center { align-items: center; }
+                            .cursor-pointer { cursor: pointer; }
+                            .font-bold { font-weight: 700; }
+                            .text-sm { font-size: 0.875rem; }
+                            .text-gray-600 { color: #718096; }
+                            .transform { transform-origin: center; }
+                            .transition-transform { transition: transform 0.2s; }
+                            .border-t { border-top: 1px solid #e2e8f0; }
+                            .text-red-500 { color: #f56565; }
+                            .mb-2 { margin-bottom: 0.5rem; }
+                            .items-start { align-items: flex-start; }
+                            .space-x-2 > * + * { margin-left: 0.5rem; }
+                        </style>
+                    `;
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errores en el archivo',
+                        html: styles + mensajeDetallado,
+                        showConfirmButton: true,
+                        width: '600px',
+                        didOpen: () => {
+                            // Agregar evento click para rotar las flechas
+                            document.querySelectorAll('.bg-gray-100').forEach(header => {
+                                header.addEventListener('click', function() {
+                                    const arrow = this.querySelector('svg');
+                                    const content = this.nextElementSibling;
+                                    if (content.classList.contains('hidden')) {
+                                        arrow.style.transform = 'rotate(180deg)';
+                                    } else {
+                                        arrow.style.transform = 'rotate(0deg)';
+                                    }
+                                });
+                            });
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error.response?.data?.message || 'Error al procesar el archivo'
+                    });
+                }
+            } finally {
+                setLoading(false);
             }
         } catch (error) {
             console.error('Error en la carga:', error);
@@ -197,8 +310,6 @@ const CargaMasivaHorarios = ({ onClose, onSuccess }) => {
                     text: error.response?.data?.message || 'Error al procesar el archivo'
                 });
             }
-        } finally {
-            setLoading(false);
         }
     };
 

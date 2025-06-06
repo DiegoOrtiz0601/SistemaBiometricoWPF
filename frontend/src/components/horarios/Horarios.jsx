@@ -201,18 +201,7 @@ const Horarios = () => {
                         <RiUploadLine className="text-xl" />
                         Cargar Horarios
                     </motion.button>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                            setEditingHorario(null);
-                            setShowForm(true);
-                        }}
-                        className="bg-vml-red hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center gap-2"
-                    >
-                        <RiAddLine className="text-xl" />
-                        Nuevo Horario
-                    </motion.button>
+                    
                 </div>
             </div>
 
@@ -301,14 +290,14 @@ const Horarios = () => {
                                                 >
                                                     <RiEditLine className="text-xl" />
                                                 </LoadingButton>
-                                                <LoadingButton
+                                                {/* <LoadingButton
                                                     onClick={() => handleDelete(horario.id)}
                                                     className="text-red-600 hover:text-red-900 p-1 hover:bg-red-100 rounded-full transition-colors"
                                                     title="Eliminar"
                                                     loading={loadingAction}
                                                 >
                                                     <RiDeleteBin6Line className="text-xl" />
-                                                </LoadingButton>
+                                                </LoadingButton> */}
                                             </td>
                                         </motion.tr>
                                     ))}
@@ -448,6 +437,7 @@ const Horarios = () => {
                         onClose={() => {
                             setShowForm(false);
                             setEditingHorario(null);
+                            fetchHorarios(); 
                         }}
                         horarioToEdit={editingHorario}
                     />
@@ -458,6 +448,7 @@ const Horarios = () => {
                         onClose={() => {
                             setShowDetalle(false);
                             setHorarioSeleccionado(null);
+                            fetchHorarios(); 
                         }}
                     />
                 )}

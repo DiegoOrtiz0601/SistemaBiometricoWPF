@@ -7,13 +7,35 @@ import {
     CardContent,
     Divider
 } from '@mui/material';
+import { LoadingOverlay } from '../components/common/LoadingStates';
 import { appIcons, appColors } from '../utils/theme';
 import axiosInstance from '../utils/axiosConfig';
 import { toast } from 'react-hot-toast';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    PointElement,
+    LineElement
+} from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    PointElement,
+    LineElement
+);
 
 const Dashboard = () => {
     const [stats, setStats] = useState({
@@ -237,13 +259,7 @@ const Dashboard = () => {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center h-full">
-                <CircularProgress style={{ color: appColors.primary }} />
-            </div>
-        );
-    }
+    if (loading) return <LoadingOverlay />;
 
     return (
         <div className="p-6">

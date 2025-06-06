@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class AreaController extends Controller
@@ -178,5 +179,41 @@ class AreaController extends Controller
             'status' => 'success',
             'data' => $areas
         ]);
+    }
+
+    public function areasPorSede($idSede)
+    {
+        try {
+            // Primero verificamos que la sede exista y esté activa
+            $sedeExists = DB::table('Sede')
+                ->where('IdSede', $idSede)
+                ->where('Estado', 1)
+                ->exists();
+
+            if (!$sedeExists) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La sede especificada no existe o no está activa'
+                ], 404);
+            }
+
+            $areas = DB::table('Areas')  // Cambiado de 'Area' a 'Areas'
+                ->where('IdSede', $idSede)
+                ->where('Estado', 1)
+                ->select('IdArea as id', 'Nombre as nombre')
+                ->orderBy('Nombre')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $areas
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error en areasPorSede: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las áreas: ' . $e->getMessage()
+            ], 500);
+        }
     }
 } 

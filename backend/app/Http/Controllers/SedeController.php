@@ -2,43 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sede;
+use App\Models\Empresa;
+use App\Models\Ciudad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class SedeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = DB::table('Sede')
-            ->join('Empresa', 'Sede.IdEmpresa', '=', 'Empresa.IdEmpresa')
-            ->join('Ciudad', 'Sede.IdCiudad', '=', 'Ciudad.IdCiudad')
-            ->select(
-                'Sede.*',
-                'Empresa.Nombre as NombreEmpresa',
-                'Ciudad.Nombre as NombreCiudad'
-            );
-        
-        // Búsqueda
-        if ($request->has('search')) {
-            $searchTerm = $request->search;
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('Sede.Nombre', 'LIKE', "%{$searchTerm}%")
-                  ->orWhere('Empresa.Nombre', 'LIKE', "%{$searchTerm}%")
-                  ->orWhere('Ciudad.Nombre', 'LIKE', "%{$searchTerm}%");
+        try {
+            $query = Sede::with(['empresa', 'ciudad'])
+                ->select('Sede.*');
+
+            // Búsqueda
+            if ($request->has('search')) {
+                $searchTerm = $request->search;
+                $query->where(function($q) use ($searchTerm) {
+                    $q->where('Nombre', 'LIKE', "%{$searchTerm}%")
+                      ->orWhereHas('empresa', function($q) use ($searchTerm) {
+                          $q->where('Nombre', 'LIKE', "%{$searchTerm}%");
+                      })
+                      ->orWhereHas('ciudad', function($q) use ($searchTerm) {
+                          $q->where('Nombre', 'LIKE', "%{$searchTerm}%");
+                      });
+                });
+            }
+
+            // Ordenamiento
+            $sortField = $request->input('sortField', 'Nombre');
+            $sortDirection = $request->input('sortDirection', 'asc');
+            
+            $query->orderBy($sortField, $sortDirection);
+
+            // Paginación
+            $perPage = $request->input('perPage', 10);
+            $sedes = $query->paginate($perPage);
+
+            // Transformar los datos para incluir los nombres relacionados
+            $sedes->getCollection()->transform(function ($sede) {
+                $sede->NombreEmpresa = optional($sede->empresa)->Nombre;
+                $sede->NombreCiudad = optional($sede->ciudad)->Nombre;
+                return $sede;
             });
+
+            return $sedes;
+            
+        } catch (\Exception $e) {
+            Log::error('Error en SedeController@index: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al cargar las sedes'], 500);
         }
-
-        // Ordenamiento
-        $sortField = $request->input('sortField', 'Sede.Nombre');
-        $sortDirection = $request->input('sortDirection', 'asc');
-        $query->orderBy($sortField, $sortDirection);
-
-        // Paginación
-        $perPage = $request->input('perPage', 10);
-        $sedes = $query->paginate($perPage);
-
-        return Response::json($sedes);
     }
 
     public function store(Request $request)
@@ -157,5 +173,27 @@ class SedeController extends Controller
             'status' => 'success',
             'data' => $sedes
         ]);
+    }
+
+    public function sedesPorEmpresa($idEmpresa)
+    {
+        try {
+            $sedes = DB::table('Sede')
+                ->select('IdSede', 'Nombre')
+                ->where('IdEmpresa', $idEmpresa)
+                ->where('Estado', 1)
+                ->orderBy('Nombre')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $sedes
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las sedes: ' . $e->getMessage()
+            ], 500);
+        }
     }
 } 

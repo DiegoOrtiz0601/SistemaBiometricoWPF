@@ -9,7 +9,8 @@ import {
     RiTeamLine,
     RiTimeLine,
     RiFileChartLine,
-    RiLayoutGridLine
+    RiLayoutGridLine,
+    RiUserSettingsLine
 } from 'react-icons/ri';
 
 const menuItems = [
@@ -20,6 +21,7 @@ const menuItems = [
     { path: '/areas', icon: RiLayoutGridLine, label: 'Áreas' },
     { path: '/empleados', icon: RiTeamLine, label: 'Empleados' },
     { path: '/horarios', icon: RiTimeLine, label: 'Horarios' },
+    { path: '/usuarios', icon: RiUserSettingsLine, label: 'Usuarios' },
     { path: '/reportes', icon: RiFileChartLine, label: 'Reportes' },
 ];
 

@@ -1,10 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RiAddLine, RiSearchLine, RiEditLine, RiDeleteBin6Line, RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
+import {
+    Typography,
+    IconButton,
+    Button,
+    TextField,
+    InputAdornment
+} from '@mui/material';
+import {
+    RiAddLine,
+    RiSearchLine,
+    RiEditLine,
+    RiDeleteBin6Line,
+    RiArrowUpSLine,
+    RiArrowDownSLine,
+    RiEyeLine,
+    RiCloseLine,
+    RiUploadLine,
+    RiAddCircleLine
+} from 'react-icons/ri';
+import {
+    AiOutlineEye,
+    AiOutlineEdit,
+    AiOutlineDelete,
+    AiOutlineSearch,
+    AiOutlinePlus
+} from 'react-icons/ai';
 import Swal from 'sweetalert2';
 import AreaForm from './AreaForm';
 import axiosInstance from '../../utils/axiosConfig';
 import { LoadingOverlay, TableLoadingRow, EmptyRow, LoadingButton } from '../common/LoadingStates';
+import { appColors } from '../../utils/theme';
+import { FaSpinner } from 'react-icons/fa';
 
 const Areas = () => {
     const [areas, setAreas] = useState([]);
@@ -55,7 +82,7 @@ const Areas = () => {
 
     useEffect(() => {
         fetchAreas();
-    }, [pagination.currentPage, searchTerm, sortField, sortDirection]);
+    }, [pagination.currentPage, pagination.perPage, searchTerm, sortField, sortDirection]);
 
     const handleSort = (field) => {
         if (field === sortField) {
@@ -142,72 +169,59 @@ const Areas = () => {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="p-6">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-gray-800">Gestión de Áreas</h1>
-                <LoadingButton
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-vml-red hover:bg-vml-red/90 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
                     onClick={() => {
                         setEditingArea(null);
                         setShowForm(true);
                     }}
-                    className="bg-vml-red hover:bg-vml-red/90 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
-                    loading={loadingAction}
                 >
                     <RiAddLine />
                     <span>Nueva Área</span>
-                </LoadingButton>
+                </motion.button>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md mb-6 relative">
-                {loadingAction && <LoadingOverlay message="Procesando..." />}
-                
-                <div className="p-4 border-b">
-                    <div className="flex items-center space-x-2">
-                        <RiSearchLine className="text-gray-400" />
-                        <input
-                            type="text"
-                            placeholder="Buscar área..."
-                            className="w-full px-3 py-2 border-none focus:outline-none"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            disabled={loading}
-                        />
-                    </div>
-                </div>
+            <div className="mb-4">
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Buscar área..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <RiSearchLine className="text-gray-400" />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </div>
 
+            <div className="bg-white rounded-lg shadow overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th 
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                    onClick={() => handleSort('Nombre')}
-                                >
-                                    <div className="flex items-center space-x-1">
-                                        <span>Nombre</span>
-                                        <SortIcon field="Nombre" />
-                                    </div>
+                    <table className="min-w-full">
+                        <thead>
+                            <tr className="bg-gray-50">
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('Nombre')}>
+                                    NOMBRE <SortIcon field="Nombre" />
                                 </th>
-                                <th 
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                    onClick={() => handleSort('Sede')}
-                                >
-                                    <div className="flex items-center space-x-1">
-                                        <span>Sede</span>
-                                        <SortIcon field="Sede" />
-                                    </div>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('Sede')}>
+                                    SEDE <SortIcon field="Sede" />
                                 </th>
-                                <th 
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                    onClick={() => handleSort('Estado')}
-                                >
-                                    <div className="flex items-center space-x-1">
-                                        <span>Estado</span>
-                                        <SortIcon field="Estado" />
-                                    </div>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('Estado')}>
+                                    ESTADO <SortIcon field="Estado" />
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Acciones
+                                    ACCIONES
                                 </th>
                             </tr>
                         </thead>
@@ -230,35 +244,35 @@ const Areas = () => {
                                                 {area.Nombre}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                {area.Sede?.Nombre}
+                                                {area.NombreSede}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`px-4 py-2 inline-flex text-sm leading-5 font-bold rounded-lg ${
+                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                                                     area.Estado 
-                                                    ? 'bg-green-200 text-green-900 border-2 border-green-400' 
-                                                    : 'bg-red-200 text-red-900 border-2 border-red-400'
+                                                    ? 'bg-green-100 text-green-800' 
+                                                    : 'bg-red-100 text-red-800'
                                                 }`}>
                                                     {area.Estado ? 'Activa' : 'Inactiva'}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <div className="flex justify-end space-x-2">
+                                                <div className="flex justify-end gap-2">
                                                     <LoadingButton
                                                         onClick={() => {
                                                             setEditingArea(area);
                                                             setShowForm(true);
                                                         }}
-                                                        className="p-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-200"
-                                                        loading={loadingAction}
+                                                        className="text-green-600 hover:text-green-900 p-1 hover:bg-green-100 rounded-full transition-colors"
                                                         title="Editar"
+                                                        loading={loadingAction}
                                                     >
                                                         <RiEditLine className="text-xl" />
                                                     </LoadingButton>
                                                     <LoadingButton
                                                         onClick={() => handleDelete(area.IdArea)}
-                                                        className="p-2 rounded-lg text-white bg-red-500 hover:bg-red-600 transition-colors duration-200"
-                                                        loading={loadingAction}
+                                                        className="text-red-600 hover:text-red-900 p-1 hover:bg-red-100 rounded-full transition-colors"
                                                         title="Eliminar"
+                                                        loading={loadingAction}
                                                     >
                                                         <RiDeleteBin6Line className="text-xl" />
                                                     </LoadingButton>
@@ -271,70 +285,115 @@ const Areas = () => {
                         </tbody>
                     </table>
                 </div>
-
-                <div className="px-6 py-4 flex items-center justify-between border-t">
-                    <div className="text-sm text-gray-500">
-                        Mostrando {((pagination.currentPage - 1) * pagination.perPage) + 1} a {Math.min(pagination.currentPage * pagination.perPage, pagination.total)} de {pagination.total} resultados
-                    </div>
-                    <div className="flex space-x-1">
-                        <LoadingButton
-                            onClick={() => setPagination(prev => ({ ...prev, currentPage: 1 }))}
-                            disabled={pagination.currentPage === 1 || loading}
-                            className={`px-3 py-1 rounded ${
-                                pagination.currentPage === 1
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-white text-gray-700 hover:bg-gray-50 border'
-                            }`}
-                            loading={loading}
+            </div>
+            
+            <div className="px-6 py-4 flex justify-between items-center bg-gray-50">
+                <div className="flex items-center space-x-4">
+                    <span className="text-sm text-gray-700">Mostrar</span>
+                    <div className="relative">
+                        <select
+                            className="border border-gray-300 rounded-md text-sm px-3 py-1 focus:outline-none focus:ring-2 focus:ring-vml-red min-w-[80px]"
+                            value={pagination.perPage}
+                            onChange={(e) => {
+                                const newPerPage = Number(e.target.value);
+                                setPagination(prev => ({
+                                    ...prev,
+                                    perPage: newPerPage,
+                                    currentPage: 1
+                                }));
+                            }}
+                            disabled={loading}
                         >
-                            «
-                        </LoadingButton>
-
-                        {Array.from({ length: pagination.lastPage }, (_, i) => i + 1)
-                            .filter(pageNum => {
-                                if (pageNum === 1 || pageNum === pagination.lastPage) return true;
-                                if (Math.abs(pageNum - pagination.currentPage) <= 2) return true;
-                                return false;
-                            })
-                            .map((pageNum, index, array) => {
-                                if (index > 0 && pageNum - array[index - 1] > 1) {
-                                    return (
-                                        <span key={`ellipsis-${pageNum}`} className="px-3 py-1">
-                                            ...
-                                        </span>
-                                    );
-                                }
-
-                                return (
-                                    <LoadingButton
-                                        key={pageNum}
-                                        onClick={() => setPagination(prev => ({ ...prev, currentPage: pageNum }))}
-                                        disabled={loading}
-                                        className={`px-3 py-1 rounded ${
-                                            pagination.currentPage === pageNum
-                                                ? 'bg-vml-red text-white'
-                                                : 'bg-white text-gray-700 hover:bg-gray-50 border'
-                                        }`}
-                                        loading={loading}
-                                    >
-                                        {pageNum}
-                                    </LoadingButton>
-                                );
-                            })}
-
-                        <LoadingButton
-                            onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.lastPage }))}
-                            disabled={pagination.currentPage === pagination.lastPage || loading}
-                            className={`px-3 py-1 rounded ${
-                                pagination.currentPage === pagination.lastPage
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-white text-gray-700 hover:bg-gray-50 border'
-                            }`}
-                            loading={loading}
-                        >
-                            »
-                        </LoadingButton>
+                            {[5, 10, 25, 50, 100].map(option => (
+                                <option key={option} value={option} className="py-1">
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
+                        {loading && (
+                            <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                                <FaSpinner className="animate-spin text-gray-400 text-sm" />
+                            </div>
+                        )}
                     </div>
+                    <span className="text-sm text-gray-700">registros por página</span>
+                </div>
+                <div className="text-sm text-gray-700">
+                    Mostrando {((pagination.currentPage - 1) * pagination.perPage) + 1} a {Math.min(pagination.currentPage * pagination.perPage, pagination.total)} de {pagination.total} registros
+                </div>
+                <div className="flex space-x-1">
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: 1 }))}
+                        disabled={pagination.currentPage === 1}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === 1
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        «
+                    </button>
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.currentPage - 1 }))}
+                        disabled={pagination.currentPage === 1}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === 1
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        ‹
+                    </button>
+                    {[...Array(pagination.lastPage)].map((_, index) => {
+                        const page = index + 1;
+                        if (
+                            page === 1 ||
+                            page === pagination.lastPage ||
+                            (page >= pagination.currentPage - 1 && page <= pagination.currentPage + 1)
+                        ) {
+                            return (
+                                <button
+                                    key={page}
+                                    onClick={() => setPagination(prev => ({ ...prev, currentPage: page }))}
+                                    className={`px-3 py-1 rounded ${
+                                        pagination.currentPage === page
+                                        ? 'bg-vml-red text-white'
+                                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                                    }`}
+                                >
+                                    {page}
+                                </button>
+                            );
+                        } else if (
+                            page === pagination.currentPage - 2 ||
+                            page === pagination.currentPage + 2
+                        ) {
+                            return <span key={page} className="px-2">...</span>;
+                        }
+                        return null;
+                    })}
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.currentPage + 1 }))}
+                        disabled={pagination.currentPage === pagination.lastPage}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === pagination.lastPage
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        ›
+                    </button>
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.lastPage }))}
+                        disabled={pagination.currentPage === pagination.lastPage}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === pagination.lastPage
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        »
+                    </button>
                 </div>
             </div>
 

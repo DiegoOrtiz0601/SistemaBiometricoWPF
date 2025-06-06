@@ -11,5 +11,14 @@ export default defineConfig({
         secure: false
       }
     }
+  },
+  resolve: {
+    alias: {
+      'dayjs': 'dayjs',
+      '@mui/x-date-pickers': '@mui/x-date-pickers'
+    }
+  },
+  optimizeDeps: {
+    include: ['dayjs', '@mui/x-date-pickers']
   }
 });

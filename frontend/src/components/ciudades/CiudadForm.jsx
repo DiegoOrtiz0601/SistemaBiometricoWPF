@@ -22,7 +22,11 @@ const CiudadForm = ({ onSubmit, initialData, onCancel }) => {
         e.preventDefault();
         setSubmitting(true);
         try {
-            await onSubmit(formData);
+            const dataToSubmit = {
+                nombre: formData.Nombre,
+                estado: formData.Estado ? "1" : "0"
+            };
+            await onSubmit(dataToSubmit);
         } finally {
             setSubmitting(false);
         }

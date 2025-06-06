@@ -1,66 +1,65 @@
-import {
-    RiPencilLine,
-    RiDeleteBin6Line,
-    RiAddLine,
-    RiCheckLine,
-    RiCloseLine,
-    RiSearchLine,
-    RiBuilding2Line,
-    RiBuilding4Line,
-    RiTeamLine,
-    RiHome2Line,
-    RiCheckboxCircleLine,
-    RiCloseCircleLine,
-    RiRefreshLine,
-    RiDownload2Line,
-    RiUpload2Line,
-    RiAlertLine,
-    RiInformationLine,
-    RiErrorWarningLine,
-    RiCheckboxCircleFill
-} from 'react-icons/ri';
+// src/utils/theme.js
 
-export const appIcons = {
-    edit: RiPencilLine,
-    delete: RiDeleteBin6Line,
-    add: RiAddLine,
-    save: RiCheckLine,
-    cancel: RiCloseLine,
-    search: RiSearchLine,
-    business: RiBuilding2Line,
-    city: RiBuilding4Line,
-    group: RiTeamLine,
-    domain: RiHome2Line,
-    building: RiBuilding2Line,
-    check: RiCheckboxCircleLine,
-    close: RiCloseCircleLine,
-    refresh: RiRefreshLine,
-    download: RiDownload2Line,
-    upload: RiUpload2Line,
-    warning: RiAlertLine,
-    info: RiInformationLine,
-    error: RiErrorWarningLine,
-    success: RiCheckboxCircleFill
-};
+// 🧩 Importación de íconos desde MUI
+import GroupIcon from '@mui/icons-material/Group';
+import BusinessIcon from '@mui/icons-material/Business';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import DomainIcon from '@mui/icons-material/Domain';
 
+// 🎨 Colores principales de la aplicación
 export const appColors = {
-    primary: '#E31937', // VML Red
-    secondary: '#2B2B2B',
-    success: '#4CAF50',
-    warning: '#FFC107',
-    error: '#F44336',
-    info: '#2196F3',
-    background: '#F5F5F5',
-    paper: '#FFFFFF',
+    primary: '#E31937',     // Rojo VML
+    secondary: '#1F2937',   // Gris oscuro
+    accent: '#3B82F6',      // Azul para acentos
+    success: '#10B981',     // Verde éxito
+    warning: '#F59E0B',     // Amarillo advertencia
+    error: '#EF4444',       // Rojo errores
+    background: '#F3F4F6',  // Fondo general
+    surface: '#FFFFFF',     // Superficie tarjetas, etc.
     text: {
-        primary: '#2B2B2B',
-        secondary: '#757575'
+        primary: '#1F2937',
+        secondary: '#4B5563',
+        disabled: '#9CA3AF'
     }
 };
 
-export const sweetAlertConfig = {
-    confirmButtonColor: appColors.primary,
-    cancelButtonColor: appColors.secondary,
-    confirmButtonText: 'Aceptar',
-    cancelButtonText: 'Cancelar'
-}; 
+// 🧱 Iconos usados en las tarjetas o indicadores
+export const appIcons = {
+    group: GroupIcon,
+    business: BusinessIcon,
+    building: LocationCityIcon,
+    domain: DomainIcon
+};
+
+// 🕳️ Sombras para elevación de componentes
+export const shadows = {
+    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+    md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+};
+
+// 🟦 Bordes redondeados
+export const borders = {
+    radius: {
+        sm: '0.125rem',
+        md: '0.375rem',
+        lg: '0.5rem',
+        full: '9999px'
+    }
+};
+
+// 📐 Espaciados reutilizables
+export const spacing = {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem'
+};
+
+// ⏱️ Transiciones estándar
+export const transitions = {
+    default: 'all 0.3s ease',
+    fast: 'all 0.15s ease',
+    slow: 'all 0.45s ease'
+};

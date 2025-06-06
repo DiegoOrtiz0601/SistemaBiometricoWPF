@@ -338,7 +338,7 @@ const HorarioForm = ({ onSubmit, onClose, horarioToEdit }) => {
                                 disabled={loading}
                                 className="px-4 py-2 bg-vml-red text-white rounded-md hover:bg-red-700 disabled:opacity-50"
                             >
-                                {loading ? 'Guardando...' : 'Guardar'}
+                                {loading ? 'Actualizando...' : 'Actualizar'}
                             </button>
                         </div>
                     </form>

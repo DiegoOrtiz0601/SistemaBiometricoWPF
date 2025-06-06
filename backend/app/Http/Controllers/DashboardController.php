@@ -16,9 +16,10 @@ class DashboardController extends Controller
         try {
             // Mapeo de tipos de empleado
             $tiposEmpleado = [
-                1 => 'Enrolado No Marca',
-                2 => 'Enrolado Rotativo',
-                3 => 'No Enrolado'
+                1 => 'ENROLADO NO MARCA',
+                2 => 'ENROLADO MARCA - SIN SEGUIMIENTO',
+                3 => 'ENROLADO MARCA - CON SEGUIMIENTO',
+                4 => 'ENROLADO ROTATIVO'
             ];
 
             // Estadísticas de Empleados

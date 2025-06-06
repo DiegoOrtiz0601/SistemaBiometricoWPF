@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RiAddLine, RiSearchLine, RiEditLine, RiDeleteBin6Line, RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
+import { RiAddLine, RiSearchLine, RiEditLine, RiDeleteBin6Line, RiArrowUpSLine, RiArrowDownSLine, RiEyeLine, RiCloseLine, RiUploadLine, RiAddCircleLine } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import EmpresaForm from './EmpresaForm';
 import axiosInstance from '../../utils/axiosConfig';
 import { LoadingOverlay, TableLoadingRow, EmptyRow, LoadingButton } from '../common/LoadingStates';
+import {
+    Typography,
+    IconButton,
+    Button,
+    TextField,
+    InputAdornment
+} from '@mui/material';
+import { appColors } from '../../utils/theme';
+import { FaSpinner } from 'react-icons/fa';
+import { useUpdate } from "../../context/UpdateContext";
 
 const Empresas = () => {
     const [empresas, setEmpresas] = useState([]);
@@ -21,6 +31,7 @@ const Empresas = () => {
         perPage: 10,
         total: 0
     });
+    const { triggerUpdate } = useUpdate();
 
     const fetchEmpresas = async () => {
         try {
@@ -34,12 +45,16 @@ const Empresas = () => {
                     sortDirection
                 }
             });
-            setEmpresas(response.data.data);
+
+            // Asegurarnos de que data.data sea un array
+            const empresasData = Array.isArray(response.data.data) ? response.data.data : [];
+            setEmpresas(empresasData);
+            
             setPagination({
-                currentPage: response.data.current_page,
-                lastPage: response.data.last_page,
-                perPage: response.data.per_page,
-                total: response.data.total
+                currentPage: response.data.current_page || 1,
+                lastPage: response.data.last_page || 1,
+                perPage: response.data.per_page || 10,
+                total: response.data.total || 0
             });
         } catch (error) {
             console.error('Error al cargar empresas:', error);
@@ -48,6 +63,8 @@ const Empresas = () => {
                 title: 'Error',
                 text: 'No se pudieron cargar las empresas'
             });
+            // En caso de error, establecer un array vacío
+            setEmpresas([]);
         } finally {
             setLoading(false);
         }
@@ -55,7 +72,7 @@ const Empresas = () => {
 
     useEffect(() => {
         fetchEmpresas();
-    }, [pagination.currentPage, searchTerm, sortField, sortDirection]);
+    }, [pagination.currentPage, pagination.perPage, searchTerm, sortField, sortDirection]);
 
     const handleSort = (field) => {
         if (field === sortField) {
@@ -87,12 +104,13 @@ const Empresas = () => {
             setShowForm(false);
             setEditingEmpresa(null);
             fetchEmpresas();
+            triggerUpdate('ciudades');
         } catch (error) {
             console.error('Error:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Hubo un error al procesar la solicitud'
+                text: 'No se pudo guardar la empresa'
             });
         } finally {
             setLoadingAction(false);
@@ -116,10 +134,11 @@ const Empresas = () => {
                 await axiosInstance.delete(`/empresas/${id}`);
                 Swal.fire({
                     icon: 'success',
-                    title: '¡Eliminado!',
-                    text: 'La empresa ha sido eliminada'
+                    title: 'Éxito',
+                    text: 'Empresa eliminada exitosamente'
                 });
                 fetchEmpresas();
+                triggerUpdate('ciudades');
             } catch (error) {
                 console.error('Error:', error);
                 Swal.fire({
@@ -138,89 +157,95 @@ const Empresas = () => {
             <RiArrowDownSLine className="text-vml-red" />;
     };
 
+    const handleOpenModal = () => {
+        setEditingEmpresa(null);
+        setShowForm(true);
+    };
+
+    const handleEdit = (empresa) => {
+        setEditingEmpresa(empresa);
+        setShowForm(true);
+    };
+
+    const handleView = (empresa) => {
+        Swal.fire({
+            title: 'Detalles de la Empresa',
+            html: `
+                <div class="text-left">
+                    <p><strong>Nombre:</strong> ${empresa.Nombre}</p>
+                    <p><strong>NIT:</strong> ${empresa.NIT}</p>
+                    <p><strong>Estado:</strong> ${empresa.Estado ? 'Activa' : 'Inactiva'}</p>
+                </div>
+            `,
+            confirmButtonText: 'Cerrar'
+        });
+    };
+
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="p-6">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-gray-800">Gestión de Empresas</h1>
-                <LoadingButton
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-vml-red hover:bg-vml-red/90 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
                     onClick={() => {
                         setEditingEmpresa(null);
                         setShowForm(true);
                     }}
-                    className="bg-vml-red hover:bg-vml-red/90 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
-                    loading={loadingAction}
                 >
                     <RiAddLine />
                     <span>Nueva Empresa</span>
-                </LoadingButton>
+                </motion.button>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md mb-6 relative">
-                {loadingAction && <LoadingOverlay message="Procesando..." />}
-                
-                <div className="p-4 border-b">
-                    <div className="flex items-center space-x-2">
-                        <RiSearchLine className="text-gray-400" />
-                        <input
-                            type="text"
-                            placeholder="Buscar empresa..."
-                            className="w-full px-3 py-2 border-none focus:outline-none"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            disabled={loading}
-                        />
-                    </div>
-                </div>
+            <div className="mb-4">
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Buscar empresa..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <RiSearchLine className="text-gray-400" />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </div>
 
+            <div className="bg-white rounded-lg shadow overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th 
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                    onClick={() => handleSort('Nombre')}
-                                >
-                                    <div className="flex items-center space-x-1">
-                                        <span>Nombre</span>
-                                        <SortIcon field="Nombre" />
-                                    </div>
+                    <table className="min-w-full">
+                        <thead>
+                            <tr className="bg-gray-50">
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('Nombre')}>
+                                    NOMBRE <SortIcon field="Nombre" />
                                 </th>
-                                <th 
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                    onClick={() => handleSort('Direccion')}
-                                >
-                                    <div className="flex items-center space-x-1">
-                                        <span>Dirección</span>
-                                        <SortIcon field="Direccion" />
-                                    </div>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('Direccion')}>
+                                    DIRECCIÓN <SortIcon field="Direccion" />
                                 </th>
-                                <th 
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                    onClick={() => handleSort('Telefono')}
-                                >
-                                    <div className="flex items-center space-x-1">
-                                        <span>Teléfono</span>
-                                        <SortIcon field="Telefono" />
-                                    </div>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('Telefono')}>
+                                    TELÉFONO <SortIcon field="Telefono" />
                                 </th>
-                                <th 
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                    onClick={() => handleSort('Estado')}
-                                >
-                                    <div className="flex items-center space-x-1">
-                                        <span>Estado</span>
-                                        <SortIcon field="Estado" />
-                                    </div>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('Estado')}>
+                                    ESTADO <SortIcon field="Estado" />
                                 </th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Acciones
+                                    ACCIONES
                                 </th>
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
                             {loading ? (
                                 <TableLoadingRow colSpan={5} />
-                            ) : empresas.length === 0 ? (
+                            ) : !Array.isArray(empresas) || empresas.length === 0 ? (
                                 <EmptyRow colSpan={5} message="No se encontraron empresas" />
                             ) : (
                                 <AnimatePresence mode="popLayout">
@@ -232,42 +257,43 @@ const Empresas = () => {
                                             exit={{ opacity: 0, y: -20 }}
                                             transition={{ duration: 0.3 }}
                                         >
+                                            <td className="px-6 py-4 whitespace-nowrap">{empresa.Nombre}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{empresa.Direccion}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{empresa.Telefono}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                {empresa.Nombre}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                {empresa.Direccion}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                {empresa.Telefono}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`px-4 py-2 inline-flex text-sm leading-5 font-bold rounded-lg ${
-                                                    empresa.Estado 
-                                                    ? 'bg-green-200 text-green-900 border-2 border-green-400' 
-                                                    : 'bg-red-200 text-red-900 border-2 border-red-400'
+                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                                    empresa.Estado ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                                                 }`}>
-                                                    {empresa.Estado ? 'Activo' : 'Inactivo'}
+                                                    {empresa.Estado ? 'Activa' : 'Inactiva'}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                                <LoadingButton
-                                                    onClick={() => {
-                                                        setEditingEmpresa(empresa);
-                                                        setShowForm(true);
-                                                    }}
-                                                    className="p-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-200"
-                                                    loading={loadingAction}
-                                                    title="Editar"
-                                                >
-                                                    <RiEditLine className="text-xl" />
-                                                </LoadingButton>
-                                                <button
-                                                    onClick={() => handleDelete(empresa.IdEmpresa)}
-                                                    className="p-2 rounded-lg text-white bg-red-500 hover:bg-red-600 transition-colors duration-200"
-                                                >
-                                                    <RiDeleteBin6Line className="text-xl" />
-                                                </button>
+                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <div className="flex justify-end gap-2">
+                                                    <LoadingButton
+                                                        onClick={() => handleView(empresa)}
+                                                        className="text-blue-600 hover:text-blue-900 p-1 hover:bg-blue-100 rounded-full transition-colors"
+                                                        title="Ver detalles"
+                                                        loading={loadingAction}
+                                                    >
+                                                        <RiEyeLine className="text-xl" />
+                                                    </LoadingButton>
+                                                    <LoadingButton
+                                                        onClick={() => handleEdit(empresa)}
+                                                        className="text-green-600 hover:text-green-900 p-1 hover:bg-green-100 rounded-full transition-colors"
+                                                        title="Editar"
+                                                        loading={loadingAction}
+                                                    >
+                                                        <RiEditLine className="text-xl" />
+                                                    </LoadingButton>
+                                                    <LoadingButton
+                                                        onClick={() => handleDelete(empresa.IdEmpresa)}
+                                                        className="text-red-600 hover:text-red-900 p-1 hover:bg-red-100 rounded-full transition-colors"
+                                                        title="Eliminar"
+                                                        loading={loadingAction}
+                                                    >
+                                                        <RiDeleteBin6Line className="text-xl" />
+                                                    </LoadingButton>
+                                                </div>
                                             </td>
                                         </motion.tr>
                                     ))}
@@ -276,72 +302,115 @@ const Empresas = () => {
                         </tbody>
                     </table>
                 </div>
-
-                <div className="px-6 py-4 flex items-center justify-between border-t">
-                    <div className="text-sm text-gray-500">
-                        Mostrando {((pagination.currentPage - 1) * pagination.perPage) + 1} a {Math.min(pagination.currentPage * pagination.perPage, pagination.total)} de {pagination.total} resultados
-                    </div>
-                    <div className="flex space-x-1">
-                        {/* Botón Primera Página */}
-                        <LoadingButton
-                            onClick={() => setPagination(prev => ({ ...prev, currentPage: 1 }))}
-                            disabled={pagination.currentPage === 1}
-                            className={`px-3 py-1 rounded ${
-                                pagination.currentPage === 1
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-white text-gray-700 hover:bg-gray-50 border'
-                            }`}
-                            loading={loadingAction}
+            </div>
+            
+            <div className="px-6 py-4 flex justify-between items-center bg-gray-50">
+                <div className="flex items-center space-x-4">
+                    <span className="text-sm text-gray-700">Mostrar</span>
+                    <div className="relative">
+                        <select
+                            className="border border-gray-300 rounded-md text-sm px-3 py-1 focus:outline-none focus:ring-2 focus:ring-vml-red min-w-[80px]"
+                            value={pagination.perPage}
+                            onChange={(e) => {
+                                const newPerPage = Number(e.target.value);
+                                setPagination(prev => ({
+                                    ...prev,
+                                    perPage: newPerPage,
+                                    currentPage: 1
+                                }));
+                            }}
+                            disabled={loading}
                         >
-                            «
-                        </LoadingButton>
-
-                        {/* Números de Página */}
-                        {Array.from({ length: pagination.lastPage }, (_, i) => i + 1)
-                            .filter(pageNum => {
-                                if (pageNum === 1 || pageNum === pagination.lastPage) return true;
-                                if (Math.abs(pageNum - pagination.currentPage) <= 2) return true;
-                                return false;
-                            })
-                            .map((pageNum, index, array) => {
-                                if (index > 0 && pageNum - array[index - 1] > 1) {
-                                    return (
-                                        <span key={`ellipsis-${pageNum}`} className="px-3 py-1">
-                                            ...
-                                        </span>
-                                    );
-                                }
-
-                                return (
-                                    <LoadingButton
-                                        key={pageNum}
-                                        onClick={() => setPagination(prev => ({ ...prev, currentPage: pageNum }))}
-                                        className={`px-3 py-1 rounded ${
-                                            pagination.currentPage === pageNum
-                                                ? 'bg-vml-red text-white'
-                                                : 'bg-white text-gray-700 hover:bg-gray-50 border'
-                                        }`}
-                                        loading={loadingAction}
-                                    >
-                                        {pageNum}
-                                    </LoadingButton>
-                                );
-                            })}
-
-                        {/* Botón Última Página */}
-                        <LoadingButton
-                            onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.lastPage }))}
-                            disabled={pagination.currentPage === pagination.lastPage}
-                            className={`px-3 py-1 rounded ${
-                                pagination.currentPage === pagination.lastPage
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-white text-gray-700 hover:bg-gray-50 border'
-                            }`}
-                            loading={loadingAction}
-                        >
-                            »
-                        </LoadingButton>
+                            {[5, 10, 25, 50, 100].map(option => (
+                                <option key={option} value={option} className="py-1">
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
+                        {loading && (
+                            <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                                <FaSpinner className="animate-spin text-gray-400 text-sm" />
+                            </div>
+                        )}
                     </div>
+                    <span className="text-sm text-gray-700">registros por página</span>
+                </div>
+                <div className="text-sm text-gray-700">
+                    Mostrando {((pagination.currentPage - 1) * pagination.perPage) + 1} a {Math.min(pagination.currentPage * pagination.perPage, pagination.total)} de {pagination.total} registros
+                </div>
+                <div className="flex space-x-1">
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: 1 }))}
+                        disabled={pagination.currentPage === 1}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === 1
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        «
+                    </button>
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.currentPage - 1 }))}
+                        disabled={pagination.currentPage === 1}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === 1
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        ‹
+                    </button>
+                    {[...Array(pagination.lastPage)].map((_, index) => {
+                        const page = index + 1;
+                        if (
+                            page === 1 ||
+                            page === pagination.lastPage ||
+                            (page >= pagination.currentPage - 1 && page <= pagination.currentPage + 1)
+                        ) {
+                            return (
+                                <button
+                                    key={page}
+                                    onClick={() => setPagination(prev => ({ ...prev, currentPage: page }))}
+                                    className={`px-3 py-1 rounded ${
+                                        pagination.currentPage === page
+                                        ? 'bg-vml-red text-white'
+                                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                                    }`}
+                                >
+                                    {page}
+                                </button>
+                            );
+                        } else if (
+                            page === pagination.currentPage - 2 ||
+                            page === pagination.currentPage + 2
+                        ) {
+                            return <span key={page} className="px-2">...</span>;
+                        }
+                        return null;
+                    })}
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.currentPage + 1 }))}
+                        disabled={pagination.currentPage === pagination.lastPage}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === pagination.lastPage
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        ›
+                    </button>
+                    <button
+                        onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.lastPage }))}
+                        disabled={pagination.currentPage === pagination.lastPage}
+                        className={`px-3 py-1 rounded ${
+                            pagination.currentPage === pagination.lastPage
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                        »
+                    </button>
                 </div>
             </div>
 

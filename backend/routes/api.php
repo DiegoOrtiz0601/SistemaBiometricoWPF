@@ -10,6 +10,8 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\AsignacionHorarioController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ReporteController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::get('formatos/plantilla_horarios.csv', [AsignacionHorarioController::class, 'descargarPlantilla']);
@@ -59,11 +61,35 @@ Route::middleware('auth:sanctum')->group(function () {
     // Rutas para Asignación de Horarios
     Route::get('/asignacion-horarios', [AsignacionHorarioController::class, 'index']);
     Route::get('/asignacion-horarios/template', [AsignacionHorarioController::class, 'downloadTemplate']);
-    Route::post('/asignacion-horarios/carga-masiva', [AsignacionHorarioController::class, 'uploadFile']);
+    Route::post('/asignacion-horarios/carga-masiva', [AsignacionHorarioController::class, 'cargaMasiva']);
     Route::post('/asignacion-horarios', [AsignacionHorarioController::class, 'store']);
     Route::put('/asignacion-horarios/{id}', [AsignacionHorarioController::class, 'update']);
     Route::delete('/asignacion-horarios/{id}', [AsignacionHorarioController::class, 'destroy']);
 
     // Rutas para Dashboard
     Route::get('/dashboard/stats', [DashboardController::class, 'getStats']);
+
+    // Rutas de Usuario
+    Route::group(['prefix' => 'usuarios'], function () {
+        Route::get('/roles', [UsuarioController::class, 'getRoles']);
+        Route::get('/', [UsuarioController::class, 'index']);
+        Route::post('/', [UsuarioController::class, 'store']);
+        Route::get('/{id}', [UsuarioController::class, 'show']);
+        Route::put('/{id}', [UsuarioController::class, 'update']);
+        Route::delete('/{id}', [UsuarioController::class, 'destroy']);
+        Route::post('/{id}/cambiar-password', [UsuarioController::class, 'cambiarPassword']);
+    });
+
+    // Rutas para Reportes
+    Route::group(['prefix' => 'reportes'], function () {
+        Route::get('/empresa', [ReporteController::class, 'reporteEmpresa']);
+        Route::get('/empresa/excel', [ReporteController::class, 'exportarExcel']);
+        Route::post('/empresa/enviar-correo', [ReporteController::class, 'enviarCorreo']);
+    });
+
+    // Rutas para selects de reportes
+    Route::get('/empresas/activas', [EmpresaController::class, 'empresasActivas']);
+    Route::get('/ciudades/activas', [CiudadController::class, 'ciudadesActivas']);
+    Route::get('/sedes/empresa/{idEmpresa}', [SedeController::class, 'sedesPorEmpresa']);
+    Route::get('/areas/sede/{idSede}', [AreaController::class, 'areasPorSede']);
 }); 

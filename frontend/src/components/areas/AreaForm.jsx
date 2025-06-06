@@ -21,10 +21,24 @@ const AreaForm = ({ onSubmit, initialData, onCancel }) => {
                 setLoading(true);
                 setLoadingSedes(true);
 
-                const sedesRes = await axiosInstance.get('/sedes');
-                if (sedesRes.data?.data) {
-                    setSedes(sedesRes.data.data);
+                const sedesRes = await axiosInstance.get('/sedes', {
+                    params: {
+                        perPage: 1000,
+                        sortField: 'Nombre',
+                        sortDirection: 'asc'
+                    }
+                });
+
+                if (Array.isArray(sedesRes.data.data)) {
+                    const sedesOrdenadas = sedesRes.data.data.sort((a, b) => 
+                        a.Nombre.localeCompare(b.Nombre)
+                    );
+                    setSedes(sedesOrdenadas);
+                } else {
+                    console.error('La respuesta de sedes no es un array:', sedesRes.data);
+                    setSedes([]);
                 }
+
                 setLoadingSedes(false);
                 setLoading(false);
             } catch (error) {
@@ -94,10 +108,14 @@ const AreaForm = ({ onSubmit, initialData, onCancel }) => {
                         name="IdSede"
                         value={formData.IdSede}
                         onChange={handleInputChange}
-                        options={sedes}
+                        options={sedes.map(sede => ({
+                            value: sede.IdSede.toString(),
+                            label: `${sede.Nombre} - ${sede.NombreEmpresa || 'Sin empresa'}`
+                        }))}
                         isLoading={loadingSedes}
                         disabled={submitting}
                         placeholder="Seleccione una sede"
+                        required
                     />
 
                     <div>
