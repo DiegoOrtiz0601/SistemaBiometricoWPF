@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AsignacionHorario extends Model
 {
-    protected $table = 'SegundaDataBaseRegistros_Test.dbo.AsignacionHorarios';
+    protected $table = 'AsignacionHorarios';
     protected $primaryKey = 'Id';
     public $timestamps = false;
 
