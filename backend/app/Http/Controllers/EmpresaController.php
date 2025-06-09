@@ -68,7 +68,7 @@ class EmpresaController extends Controller
         // Aseguramos que Estado sea booleano
         $estado = filter_var($request->Estado, FILTER_VALIDATE_BOOLEAN);
 
-        $id = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')->insertGetId([
+        $id = DB::table('Empresa')->insertGetId([
             'Nombre' => $request->Nombre,
             'Direccion' => $request->Direccion,
             'Telefono' => $request->Telefono,
@@ -94,7 +94,7 @@ class EmpresaController extends Controller
         // Aseguramos que Estado sea booleano
         $estado = filter_var($request->Estado, FILTER_VALIDATE_BOOLEAN);
 
-        $updated = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')
+        $updated = DB::table('Empresa')
             ->where('IdEmpresa', $id)
             ->update([
                 'Nombre' => $request->Nombre,
@@ -118,7 +118,7 @@ class EmpresaController extends Controller
 
     public function destroy($id)
     {
-        $deleted = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')
+        $deleted = DB::table('Empresa')
             ->where('IdEmpresa', $id)
             ->delete();
 
@@ -137,7 +137,7 @@ class EmpresaController extends Controller
 
     public function getActivas()
     {
-        $empresas = DB::table('SegundaDataBaseRegistros_Test.dbo.Empresa')
+        $empresas = DB::table('Empresa')
             ->where('Estado', true)
             ->select('IdEmpresa', 'Nombre')
             ->orderBy('Nombre')
