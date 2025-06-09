@@ -26,26 +26,44 @@ const SedeForm = ({ onSubmit, initialData, onCancel }) => {
                 setLoadingCiudades(true);
 
                 const [empresasRes, ciudadesRes] = await Promise.all([
-                    axiosInstance.get('/empresas'),
-                    axiosInstance.get('/ciudades')
+                    axiosInstance.get('/empresas', {
+                        params: {
+                            perPage: 1000, // Obtener un número grande de registros
+                            sortField: 'Nombre',
+                            sortDirection: 'asc'
+                        }
+                    }),
+                    axiosInstance.get('/ciudades', {
+                        params: {
+                            perPage: 1000, // Obtener un número grande de registros
+                            sortField: 'nombre',
+                            sortDirection: 'asc'
+                        }
+                    })
                 ]);
 
                 if (empresasRes.data?.data) {
                     // Formatear empresas para el select
-                    const empresasFormateadas = empresasRes.data.data.map(empresa => ({
-                        value: empresa.IdEmpresa.toString(),
-                        label: empresa.Nombre
-                    }));
+                    const empresasFormateadas = empresasRes.data.data
+                        .filter(empresa => empresa.Estado) // Solo empresas activas
+                        .map(empresa => ({
+                            value: empresa.IdEmpresa.toString(),
+                            label: empresa.Nombre
+                        }))
+                        .sort((a, b) => a.label.localeCompare(b.label)); // Ordenar alfabéticamente
                     setEmpresas(empresasFormateadas);
                 }
                 setLoadingEmpresas(false);
 
                 if (ciudadesRes.data?.data) {
                     // Formatear ciudades para el select
-                    const ciudadesFormateadas = ciudadesRes.data.data.map(ciudad => ({
-                        value: ciudad.id.toString(),
-                        label: ciudad.nombre
-                    }));
+                    const ciudadesFormateadas = ciudadesRes.data.data
+                        .filter(ciudad => ciudad.estado) // Solo ciudades activas
+                        .map(ciudad => ({
+                            value: ciudad.id.toString(),
+                            label: ciudad.nombre
+                        }))
+                        .sort((a, b) => a.label.localeCompare(b.label)); // Ordenar alfabéticamente
                     setCiudades(ciudadesFormateadas);
                 }
                 setLoadingCiudades(false);
