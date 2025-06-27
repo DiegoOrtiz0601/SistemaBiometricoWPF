@@ -1,0 +1,196 @@
+[18:29:39] 📡 Iniciando módulo de verificación de huella.
+[18:29:55] 🧠 Procesando muestra de huella digital...
+[18:29:56] ❌ Huella no coincide con ningún empleado registrado.
+[18:29:58] 🧠 Procesando muestra de huella digital...
+[18:29:59] ✅ Huella verificada: Prueba Prueba (1075651331)
+[18:30:03] 🧠 Procesando muestra de huella digital...
+[18:30:05] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[19:04:06] 📡 Iniciando módulo de verificación de huella.
+[13:39:28] 🔄 Abriendo formulario de Registro de Empleado
+[13:39:40] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[13:39:40] 🏢 Empresa seleccionada: ID 3
+[13:39:40] 🏢 Empresa seleccionada: ID 3
+[13:39:40] 📍 Sede seleccionada: ID 4
+[13:39:40] 📍 Sede seleccionada: ID 4
+[13:39:40] 🧬 Huella digital cargada desde base de datos
+[13:39:40] 📄 Datos cargados para modificar empleado ID: 1350
+[13:39:46] 📥 [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Botón Registrar presionado
+[13:39:46] ✏️ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Modificando empleado existente ID 1350
+[13:39:51] ✅ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Se mantuvo el horario actual para el empleado ID 1350
+[13:45:48] 🧹 Formulario de empleado limpiado
+[13:45:58] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[13:45:58] 🏢 Empresa seleccionada: ID 3
+[13:45:58] 🏢 Empresa seleccionada: ID 3
+[13:45:58] 📍 Sede seleccionada: ID 4
+[13:45:58] 📍 Sede seleccionada: ID 4
+[13:45:58] 🧬 Huella digital cargada desde base de datos
+[13:45:58] 📄 Datos cargados para modificar empleado ID: 1350
+[13:46:04] 📥 [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Botón Registrar presionado
+[13:46:04] ✏️ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Modificando empleado existente ID 1350
+[13:46:05] ✅ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Se mantuvo el horario actual para el empleado ID 1350
+[13:46:25] 🧹 Formulario de empleado limpiado
+[13:54:21] 🔄 Abriendo formulario de Registro de Empleado
+[13:54:26] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[13:54:26] 🏢 Empresa seleccionada: ID 3
+[13:54:26] 🏢 Empresa seleccionada: ID 3
+[13:54:26] 📍 Sede seleccionada: ID 4
+[13:54:26] 📍 Sede seleccionada: ID 4
+[13:54:26] 🧬 Huella digital cargada desde base de datos
+[13:54:26] 📄 Datos cargados para modificar empleado ID: 1350
+[13:54:30] 📥 [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Botón Registrar presionado
+[13:54:30] ✏️ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Modificando empleado ID 1350
+[13:54:33] ✅ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Se mantuvo el horario actual para empleado ID 1350
+[13:54:35] 🧹 Formulario de empleado limpiado
+[13:54:44] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[13:54:44] 🏢 Empresa seleccionada: ID 3
+[13:54:44] 🏢 Empresa seleccionada: ID 3
+[13:54:44] 📍 Sede seleccionada: ID 4
+[13:54:44] 📍 Sede seleccionada: ID 4
+[13:54:44] 🧬 Huella digital cargada desde base de datos
+[13:54:44] 📄 Datos cargados para modificar empleado ID: 1350
+[13:54:48] 📸 Intentando iniciar captura de huella
+[13:54:49] ❌ Captura de huella cancelada por el usuario
+[13:57:56] 📥 [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Botón Registrar presionado
+[13:57:56] ✏️ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Modificando empleado ID 1350
+[13:57:58] ✅ [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Se mantuvo el horario actual para empleado ID 1350
+[13:57:59] 🧹 Formulario de empleado limpiado
+[14:18:34] 🔄 Abriendo formulario de Registro de Empleado
+[14:18:55] 📸 Intentando iniciar captura de huella
+[14:18:56] ❌ Captura de huella cancelada por el usuario
+[14:23:07] 🔄 Abriendo formulario de Registro de Empleado
+[14:23:11] 📸 Intentando iniciar captura de huella
+[14:23:16] ❌ Captura de huella cancelada por el usuario
+[14:23:58] 📥 [BiomentricoHolding.Data.DataBaseRegistro_Test.Usuario] Botón Registrar presionado
+[14:24:08] 🚫 Acceso denegado a Configuración
+[14:34:47] 🔄 Abriendo formulario de Registro de Empleado
+[14:35:59] 🔄 Abriendo formulario de Registro de Empleado
+[14:37:39] 🔄 Abriendo formulario de Registro de Empleado
+[14:39:18] 🔄 Abriendo formulario de Registro de Empleado
+[14:39:44] 🚫 Acceso denegado a Configuración
+[14:40:40] ↩️ Usuario volvió a la pantalla principal desde RegistroEmpleado
+[15:01:03] 🚫 Acceso denegado a Configuración
+[15:01:19] 🔐 Acceso autorizado a Configuración
+[15:01:19] ✔️ Sede actual cargada: UNICENTRO
+[00:08:28] 🔐 Acceso autorizado a Configuración
+[00:08:29] ✔️ Sede actual cargada: UNICENTRO
+[00:21:56] 🔄 Abriendo formulario de Registro de Empleado
+[00:22:01] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[00:22:01] 🏢 Empresa seleccionada: ID 3
+[00:22:01] 🏢 Empresa seleccionada: ID 3
+[00:22:01] 📍 Sede seleccionada: ID 4
+[00:22:02] 📍 Sede seleccionada: ID 4
+[00:22:02] 🧬 Huella digital cargada desde base de datos
+[00:22:02] 📄 Datos cargados para modificar empleado ID: 1350
+[00:22:09] 📥 [DESKTOP ] Botón Registrar presionado
+[00:22:09] ✏️ [DESKTOP ] Modificando empleado ID 1350
+[00:22:11] ✅ [DESKTOP ] Se mantuvo el horario actual para empleado ID 1350
+[00:22:12] 🧹 Formulario de empleado limpiado
+[00:22:21] 🔐 Acceso autorizado a Configuración
+[00:22:21] ✔️ Sede actual cargada: UNICENTRO
+[00:22:49] 🔄 Abriendo formulario de Registro de Empleado
+[00:23:08] 📥 [DESKTOP ] Botón Registrar presionado
+[00:23:12] 🏢 Empresa seleccionada: ID 16
+[00:23:13] 📍 Sede seleccionada: ID 145
+[00:23:16] 📥 [DESKTOP ] Botón Registrar presionado
+[00:23:40] 📡 Iniciando módulo de verificación de huella.
+[00:25:54] 🚫 Acceso denegado al módulo de Reportes
+[00:26:42] 🔐 Acceso autorizado a Configuración
+[00:26:42] ✔️ Sede actual cargada: UNICENTRO
+[00:27:54] 🔄 Abriendo formulario de Registro de Empleado
+[00:28:02] ✏️ Usuario con cédula 80550594 desea modificar datos.
+[00:28:02] 🏢 Empresa seleccionada: ID 3
+[00:28:02] 🏢 Empresa seleccionada: ID 3
+[00:28:02] 📍 Sede seleccionada: ID 4
+[00:28:02] 📍 Sede seleccionada: ID 4
+[00:28:02] 🧬 Huella digital cargada desde base de datos
+[00:28:02] 📄 Datos cargados para modificar empleado ID: 1350
+[00:28:08] 📥 [ORTIZ] Botón Registrar presionado
+[00:28:08] ✏️ [ORTIZ] Modificando empleado ID 1350
+[00:28:11] ✅ [ORTIZ] Se mantuvo el horario actual para empleado ID 1350
+[00:28:12] 🧹 Formulario de empleado limpiado
+[00:30:51] ↩️ Usuario volvió a la pantalla principal desde RegistroEmpleado
+[00:31:05] 📊 Acceso autorizado al módulo de Reportes por el usuario 12
+[23:58:10] 🔄 Abriendo formulario de Registro de Empleado
+[23:59:03] ✏️ Usuario con cédula 1075651412 desea modificar datos.
+[23:59:03] 🏢 Empresa seleccionada: ID 9
+[23:59:03] 🏢 Empresa seleccionada: ID 9
+[23:59:03] 📍 Sede seleccionada: ID 13
+[23:59:03] 📍 Sede seleccionada: ID 13
+[23:59:03] 🧬 Huella digital cargada desde base de datos
+[23:59:03] 📄 Datos cargados para modificar empleado ID: 1519
+[23:59:47] 📸 Intentando iniciar captura de huella
+[23:59:58] ✅ Huella capturada correctamente
+[00:00:00] 📥 [DESKTOP ] Botón Registrar presionado
+[00:00:00] ✏️ [DESKTOP ] Modificando empleado ID 1519
+[00:00:04] ✅ [DESKTOP ] Se mantuvo el horario actual para empleado ID 1519
+[00:00:05] 🧹 Formulario de empleado limpiado
+[00:00:07] ↩️ Usuario volvió a la pantalla principal desde RegistroEmpleado
+[00:00:12] 📡 Iniciando módulo de verificación de huella.
+[00:00:14] 🧠 Procesando muestra de huella digital...
+[00:00:15] ✅ Huella verificada: JORGE ARTURO PEÑA PEÑA (1075651412)
+[00:00:15] 📝 Entrada registrada para JORGE ARTURO (1075651412)
+[00:00:22] 🧠 Procesando muestra de huella digital...
+[00:00:23] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[00:00:23] 📝 Entrada registrada para DIEGO ARMANDO (80550594)
+[00:00:49] 🔄 Abriendo formulario de Registro de Empleado
+[00:01:05] 🏢 Empresa seleccionada: ID 5
+[00:01:07] 📍 Sede seleccionada: ID 69
+[00:01:16] 🏢 Empresa seleccionada: ID 3
+[00:01:17] 📍 Sede seleccionada: ID 4
+[00:01:22] 📸 Intentando iniciar captura de huella
+[00:01:33] ✅ Huella capturada correctamente
+[00:01:36] 📥 [DESKTOP ] Botón Registrar presionado
+[00:01:36] 🆕 [DESKTOP ] Nuevo empleado registrado: PRUEBA ERROR (980980980)
+[00:01:39] 🚫 [DESKTOP ] Canceló la creación de horario para empleado ID 1550
+[00:01:40] 📥 [DESKTOP ] Botón Registrar presionado
+[00:01:40] 🆕 [DESKTOP ] Nuevo empleado registrado: PRUEBA ERROR (980980980)
+[00:01:41] 🕒 [DESKTOP ] Horario genérico asignado para empleado ID 1551
+[00:01:44] 🧹 Formulario de empleado limpiado
+[00:01:47] 📡 Iniciando módulo de verificación de huella.
+[00:01:51] 🧠 Procesando muestra de huella digital...
+[00:01:52] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:01:52] ⚠️ PRUEBA no tiene una asignación de horario activa.
+[00:01:54] 🧠 Procesando muestra de huella digital...
+[00:01:55] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:01:55] ⚠️ PRUEBA no tiene una asignación de horario activa.
+[00:01:57] 🧠 Procesando muestra de huella digital...
+[00:01:58] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:01:58] ⚠️ PRUEBA no tiene una asignación de horario activa.
+[00:02:00] 🧠 Procesando muestra de huella digital...
+[00:02:01] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:02:01] ⚠️ PRUEBA no tiene una asignación de horario activa.
+[00:02:03] 🧠 Procesando muestra de huella digital...
+[00:02:04] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:02:04] ⚠️ PRUEBA no tiene una asignación de horario activa.
+[00:02:10] 🧠 Procesando muestra de huella digital...
+[00:02:11] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:02:11] ⚠️ PRUEBA no tiene una asignación de horario activa.
+[00:04:03] 🧠 Procesando muestra de huella digital...
+[00:04:04] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:04:04] 📝 Entrada registrada para PRUEBA (980980980)
+[00:37:00] ✅ Versión registrada automáticamente: 1.0.0
+[00:38:41] 📡 Iniciando módulo de verificación de huella.
+[00:38:45] 🧠 Procesando muestra de huella digital...
+[00:38:47] ✅ Huella verificada: DIEGO ARMANDO ORTIZ MORA (80550594)
+[00:38:47] 📝 Novedad registrada para DIEGO ARMANDO (80550594)
+[00:38:51] 🧠 Procesando muestra de huella digital...
+[00:38:52] ❌ Huella no coincide con ningún empleado registrado.
+[00:38:54] 🧠 Procesando muestra de huella digital...
+[00:38:55] ✅ Huella verificada: JORGE ARTURO PEÑA PEÑA (1075651412)
+[00:38:55] 📝 Novedad registrada para JORGE ARTURO (1075651412)
+[00:38:59] 🧠 Procesando muestra de huella digital...
+[00:39:00] ❌ Huella no coincide con ningún empleado registrado.
+[00:39:02] 🧠 Procesando muestra de huella digital...
+[00:39:04] ❌ Huella no coincide con ningún empleado registrado.
+[00:39:05] 🧠 Procesando muestra de huella digital...
+[00:39:07] ❌ Huella no coincide con ningún empleado registrado.
+[00:39:10] 🧠 Procesando muestra de huella digital...
+[00:39:12] ❌ Huella no coincide con ningún empleado registrado.
+[00:39:13] 🧠 Procesando muestra de huella digital...
+[00:39:14] ❌ Huella no coincide con ningún empleado registrado.
+[00:39:16] 🧠 Procesando muestra de huella digital...
+[00:39:17] ❌ Huella no coincide con ningún empleado registrado.
+[00:39:19] 🧠 Procesando muestra de huella digital...
+[00:39:20] ✅ Huella verificada: PRUEBA ERROR (980980980)
+[00:39:20] 📝 Novedad registrada para PRUEBA (980980980)
+[00:53:30] ✅ Versión registrada automáticamente: 1.0.8

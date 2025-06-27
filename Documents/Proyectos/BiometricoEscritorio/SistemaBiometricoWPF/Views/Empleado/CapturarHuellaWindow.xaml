@@ -1,0 +1,84 @@
+﻿<Window x:Class="BiomentricoHolding.Views.Empleado.CapturarHuellaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Captura de Huella"
+        Height="400" Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#F3F4F6"
+        WindowStyle="None">
+
+    <Border Background="White"
+            CornerRadius="10"
+            Margin="10"
+            Effect="{DynamicResource DropShadow}">
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Título con header -->
+            <Border Background="#343a40"
+                    CornerRadius="6"
+                    Padding="10"
+                    Margin="0,0,0,20">
+                <DockPanel>
+                    <TextBlock Text="🖐 Captura de Huella Digital"
+                               Foreground="White"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"/>
+                </DockPanel>
+            </Border>
+
+            <!-- Panel de huellas -->
+            <WrapPanel x:Name="panelHuellas"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Orientation="Horizontal"
+                       ItemWidth="100"
+                       ItemHeight="100"
+                       Margin="0,0,0,20">
+                <!-- Las imágenes se agregan aquí dinámicamente -->
+            </WrapPanel>
+
+            <!-- Estado y botón cerrar -->
+            <StackPanel Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom">
+                <TextBlock x:Name="txtEstado"
+                           Text="Coloca tu dedo..."
+                           FontWeight="SemiBold"
+                           FontSize="14"
+                           Foreground="#374151"
+                           Margin="0,0,0,10"
+                           TextAlignment="Center"/>
+
+                <Button Content="❌ Cerrar"
+                        Width="120"
+                        Height="32"
+                        Background="#DC3545"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="BtnCerrar_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

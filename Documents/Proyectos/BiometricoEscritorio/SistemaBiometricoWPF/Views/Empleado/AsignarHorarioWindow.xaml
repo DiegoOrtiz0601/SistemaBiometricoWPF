@@ -1,0 +1,43 @@
+﻿<Window x:Class="BiomentricoHolding.Views.Empleado.AsignarHorarioWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Asignar Horario Específico"
+        Height="500" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#FFF2F2F2"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Border Background="White" CornerRadius="12" Margin="20" Padding="20" Effect="{DynamicResource DropShadow}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="🕒 Asignar Horario Específico"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#1F2937"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="panelDias" Margin="0,0,0,10"/>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="💾 Guardar"
+                        Width="120"
+                        Margin="5"
+                        Click="BtnGuardar_Click"/>
+                <Button Content="❌ Cancelar"
+                        Width="120"
+                        Margin="5"
+                        Click="BtnCancelar_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

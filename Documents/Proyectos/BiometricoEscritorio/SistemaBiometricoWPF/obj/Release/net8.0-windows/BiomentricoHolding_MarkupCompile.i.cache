@@ -1,0 +1,20 @@
+﻿BiomentricoHolding
+1.0.1.0
+
+winexe
+C#
+.cs
+C:\Users\Diego VML\Documents\Proyectos\BiometricoEscritorio\SistemaBiometricoWPF\obj\Release\net8.0-windows\
+BiomentricoHolding
+none
+false
+TRACE;RELEASE;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\Users\Diego VML\Documents\Proyectos\BiometricoEscritorio\SistemaBiometricoWPF\App.xaml
+142032507072
+6-880289510
+581683448903
+242-1828095156
+Views\Configuracion\BienvenidaInicialWindow.xaml;Views\Configuracion\ConfiguracionControl.xaml;Views\Configuracion\ConfiguracionInicialWindow.xaml;Views\Configuracion\SeleccionEmpresaSedeWindow.xaml;Views\Empleado\AsignarHorarioWindow.xaml;Views\Empleado\CapturaEntradaSalidaWindow.xaml;Views\Empleado\CapturarHuellaWindow.xaml;Views\Empleado\EmpleadoYaExisteDialog.xaml;Views\Empleado\MensajeWindow.xaml;Views\Empleado\MiniLoginWindow.xaml;Views\Empleado\ModificarEmpleado.xaml;Views\Empleado\RegistrarEmpleado.xaml;Views\MainWindow.xaml;Views\Reportes\ReportesView.xaml;
+
+True
+

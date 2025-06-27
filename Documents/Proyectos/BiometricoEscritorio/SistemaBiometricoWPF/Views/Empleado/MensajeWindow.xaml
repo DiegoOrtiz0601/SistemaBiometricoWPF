@@ -1,0 +1,56 @@
+﻿<Window x:Class="BiomentricoHolding.Views.MensajeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Background="#FFF2F2F2"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Border Background="White"
+            CornerRadius="12"
+            Padding="20"
+            Effect="{DynamicResource DropShadow}">
+        <Grid>         
+         
+
+            <StackPanel Margin="0,30,0,0">
+                <!-- Icono y mensaje -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock x:Name="icono"
+                               Text="🔔"
+                               FontSize="32"
+                               VerticalAlignment="Top"
+                               Margin="0,0,10,0"/>
+                    <TextBlock x:Name="txtMensaje"
+                               FontSize="16"
+                               Foreground="#1F2937"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Botones -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,20,0,0">
+                    <Button x:Name="btnCancelar"
+                            Content="Mantener"
+                            Width="100"
+                            Margin="0,0,10,0"
+                            Style="{StaticResource BotonRojo}"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="BtnCancelar_Click"/>
+                    <Button x:Name="btnOK"
+                            Content="Reemplazar"
+                            Width="100"
+                            Style="{StaticResource BotonRojo}"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="BtnOK_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
